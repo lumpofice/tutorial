@@ -1,7 +1,7 @@
 
 <html>
 	<head>
-		<title>Hello pi</title>
+		<title>Tutorials</title>
 		<meta name='viewport' content='width=device-width'>
 		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="styles/index.css") }}'>
 	</head>
@@ -10,21 +10,41 @@
 			<h1 class='Left'>Look at me raspberrypi !!!</h1>
 			<h1 class='Right'>No, look at me /home/pi</h1> 
 		</div>
-		<div class=Header>
-			<h2 class=FirstRefrain>This is a refrain for raspberrypi</h2>
-			<h2 class=SecondRefrain>This is a refrain for raspberrypi</h2>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		<form action="" method="post" novalidate>
+			{{ form.hidden_tag() }}
+			<p>
+				{{ form.integer.label }}<br>
+				{{ form.integer(size=32) }}<br>
+				{% for error in form.integer.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+				{% endfor %}
+			</p>
+			<p>{{ form.submit() }}</p>
+		</form>
+		<div class="Header">
+			<h2 class="FirstRefrain">This is a refrain for raspberrypi</h2>
+			<h2 class="SecondRefrain">This is a refrain for raspberrypi</h2>
 		</div>
-		<p class=Message>Generated 06/30/2023 06:46:21 PM EDT by pi</p>
+		<p class="Message">Generated 07/01/2023 07:03:21 PM EDT by pi</p>
 		
 	<h2 class=Message>System Uptime</h2>
-	<pre class=Message> 18:46:21 up 51 min,  2 users,  load average: 2.39, 1.61, 1.37</pre>
+	<pre class=Message> 19:03:21 up  5:58,  2 users,  load average: 0.32, 0.33, 0.72</pre>
 	
 		
 	<h2 class=Message>Disk Space Utilization</h2>
 	<pre class=Message>Filesystem      Size  Used Avail Use% Mounted on
-/dev/root        15G   13G  1.1G  93% /
+/dev/root        15G   13G  1.3G  92% /
 devtmpfs        1.8G     0  1.8G   0% /dev
-tmpfs           1.9G   47M  1.9G   3% /dev/shm
+tmpfs           1.9G   53M  1.9G   3% /dev/shm
 tmpfs           1.9G  8.6M  1.9G   1% /run
 tmpfs           5.0M  4.0K  5.0M   1% /run/lock
 tmpfs           1.9G     0  1.9G   0% /sys/fs/cgroup
@@ -33,9 +53,9 @@ tmpfs           384M  4.0K  384M   1% /run/user/1000</pre>
 	
 		
 		<h2 class=Message>Home Space Utilization (pi)</h2>
-		<pre class=Message>4.1G	/home/pi</pre>
+		<pre class=Message>4.0G	/home/pi</pre>
 		
-		<p class=Message>Hi pi! You need to check your prompt!</p>
+		<p class="Message">Hi pi! You need to check your prompt!</p>
 	</body>
 </html>
 

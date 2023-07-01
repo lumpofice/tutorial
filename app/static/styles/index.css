@@ -15,6 +15,11 @@ body {
 	padding-bottom: 1rem;
 }
 
+form {
+       	color: red;
+	font-size: 24px;	
+}
+
 .Header {
 	color: #32274d;
 	border-top: 8px double #036082;
@@ -33,6 +38,12 @@ body {
 		display: table;
 		table-layout: fixed;
 		width: 100%;
+	}
+
+	form {
+		margin: 10px auto 10px auto;
+		width: 300px;
+		padding: 50px;
 	}
 
 	.Header {

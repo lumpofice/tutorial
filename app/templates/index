@@ -48,15 +48,35 @@ echo "
 			<h1 class='Left'>Look at me $HOSTNAME !!!</h1>
 			<h1 class='Right'>No, look at me $HOME</h1> 
 		</div>
-		<div class="Header">
-			<h2 class="FirstRefrain">$REFRAIN</h2>
-			<h2 class="SecondRefrain">$REFRAIN</h2>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		<form action=\"\" method=\"post\" novalidate>
+			{{ form.hidden_tag() }}
+			<p>
+				{{ form.integer.label }}<br>
+				{{ form.integer(size=32) }}<br>
+				{% for error in form.integer.errors %}
+				<span style=\"color: red;\">[{{ error }}]</span>
+				{% endfor %}
+			</p>
+			<p>{{ form.submit() }}</p>
+		</form>
+		<div class=\"Header\">
+			<h2 class=\"FirstRefrain\">$REFRAIN</h2>
+			<h2 class=\"SecondRefrain\">$REFRAIN</h2>
 		</div>
-		<p class="Message">$TIMESTAMP</p>
+		<p class=\"Message\">$TIMESTAMP</p>
 		$(report_uptime)
 		$(report_disk_space)
 		$(report_home_space)
-		<p class="Message">$BROWSER_MESSAGE</p>
+		<p class=\"Message\">$BROWSER_MESSAGE</p>
 	</body>
 </html>
 "
