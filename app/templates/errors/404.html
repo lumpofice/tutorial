@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+	<head>
+		{% if title %}
+		<title>{{ title }}</title>
+		{% else %}
+		<title>Tutorials</title>
+		{% endif %}
+		<meta name="viewport" content="width=device-width">
+	</head>
+
+	<h1>File Not Found</h1>
+
+	<p><a href='{{ url_for("main.index") }}'>Back</a></p>

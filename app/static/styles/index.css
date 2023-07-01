@@ -1,0 +1,99 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	max-width: 60rem;
+	margin: 0 auto;
+	background-color: #c7d6ed;
+}
+
+.Opening {
+	color: #32274d;
+	border-bottom: 8px double #036082;
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+}
+
+.Header {
+	color: #32274d;
+	border-top: 8px double #036082;
+	margin-top:2rem;
+	padding-top:1rem;
+}
+
+@media screen and (min-width: 50rem) {
+	body {
+		border-left: 4px solid #d59858;
+		border-right: 4px solid #d59858;
+		padding: 1rem 2rem;
+	}
+
+	.Opening {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+	.Header {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+	.Message {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+		color: #0D20A1;
+		text-align: left;
+	}
+
+	.Left {
+		text-align: left;
+		display: table-cell;
+		width: 50%;
+		border-left: 8px double #d59858;
+		margin-left: 2rem;
+		padding-left: 1rem;
+		border-bottom: 8px double #d59858;
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+	}
+
+	.FirstRefrain {
+		text-align: left;
+		display: table-cell;
+		width: 50%;
+		border-left: 8px double #d59858;
+		margin-left: 2rem;
+		padding-left: 1rem;
+		border-top: 8px double #d59858;
+		margin-top: 2rem;
+		padding-top: 1rem;
+	}
+
+	.Right {
+		text-align: right;
+		border-right: 8px double #d59858;
+		margin-right: 2rem;
+		padding-right: 1rem;
+		border-top: 8px double #d59858;
+		margin-top: 2rem;
+		padding-top: 1rem;
+		display: table-cell;
+		width: 50%;
+	}
+
+	.SecondRefrain {
+		text-align: right;
+		border-right: 8px double #d59858;
+		margin-right: 2rem;
+		padding-right: 1rem;
+		border-bottom: 8px double #d59858;
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+		display: table-cell;
+		width: 50%;
+	}
+}

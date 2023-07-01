@@ -1,0 +1,62 @@
+#!/bin/bash
+
+REFRAIN="This is a refrain for $HOSTNAME"
+CURRENT_TIME="$(date +'%x %r %Z')"
+TIMESTAMP="Generated $CURRENT_TIME by $USER"
+BROWSER_MESSAGE="Hi $USER! You need to check your prompt!"
+
+report_uptime () {
+	echo "
+	<h2 class="Message">System Uptime</h2>
+	<pre class="Message">$(uptime)</pre>
+	"
+	return
+}
+
+report_disk_space () {
+	echo "
+	<h2 class="Message">Disk Space Utilization</h2>
+	<pre class="Message">$(df -h)</pre>
+	"
+	return
+}
+
+report_home_space () {
+	if [[ "$(id -u)" -eq 0 ]]; then
+		echo "
+		<h2 class="Message">Home Space Utilization (all users)</h2>
+		<pre class="Message">$(du -sh /home/*)</pre>
+		"
+	else
+		echo "
+		<h2 class="Message">Home Space Utilization ($USER)</h2>
+		<pre class="Message">$(du -sh $HOME)</pre>
+		"
+	fi
+	return
+}
+
+echo "
+<html>
+	<head>
+		<title>Tutorials</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{{ url_for(\"static\", filename=\"styles/index.css\") }}'>
+	</head>
+	<body>
+		<div class='Opening'>
+			<h1 class='Left'>Look at me $HOSTNAME !!!</h1>
+			<h1 class='Right'>No, look at me $HOME</h1> 
+		</div>
+		<div class="Header">
+			<h2 class="FirstRefrain">$REFRAIN</h2>
+			<h2 class="SecondRefrain">$REFRAIN</h2>
+		</div>
+		<p class="Message">$TIMESTAMP</p>
+		$(report_uptime)
+		$(report_disk_space)
+		$(report_home_space)
+		<p class="Message">$BROWSER_MESSAGE</p>
+	</body>
+</html>
+"
