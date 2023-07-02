@@ -41,9 +41,10 @@ form {
 	}
 
 	form {
-		margin: 10px auto 10px auto;
-		width: 300px;
-		padding: 50px;
+		margin: .6rem auto .6rem auto;
+		width: 33%;
+		padding-left: 3.75rem;
+		padding-right: 3.75rem;
 	}
 
 	.Header {
