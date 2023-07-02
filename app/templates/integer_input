@@ -1,6 +1,26 @@
 #!/bin/bash
 
 RESULT="The integer is $1"
+INT=$1
+
+result_for_integer () {
+	if (( INT == 0 )); then
+		echo "
+		<p>Our integer is 0</p>
+		"
+	else
+		if (( INT < 0 )); then
+			echo "
+			<p>Our integer is negative</p>
+			"
+		else
+			echo "
+			<p>Our integer is positive</p>
+			"
+		fi
+	fi
+}
+
 echo "
 <html>
 	<head>
@@ -8,6 +28,8 @@ echo "
 	</head>
 	<body>
 		<h1>$RESULT</h1>
+		$(result_for_integer)
+		<p><a href='{{ url_for(\"main.index\") }}'>Back</a></p>
 	</body>
 </html>
 "
