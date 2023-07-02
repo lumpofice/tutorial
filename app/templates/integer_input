@@ -1,0 +1,15 @@
+#!/bin/bash
+
+RESULT="The integer is $1"
+echo "
+<html>
+	<head>
+		<title>Tutorials</title>
+	</head>
+	<body>
+		<h1>$RESULT</h1>
+	</body>
+</html>
+"
+
+
