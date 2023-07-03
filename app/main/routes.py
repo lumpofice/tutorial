@@ -1,24 +1,20 @@
 from flask import redirect, render_template, url_for, request
 from app.main import bp
-import subprocess
 from app.main.forms import IntegerInputForm
+from app.main.generator import Generator
 
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
 def index():
 
-    index_view = ['app/templates/index']
-    with open('app/templates/index.html', 'w') as outfile:
-        subprocess.run(index_view, stdout=outfile)
+    gen_index = Generator()
+    gen_index.index_generator()
 
     form = IntegerInputForm()
     if form.validate_on_submit():
-        integer = form.integer.data
-        with open("app/templates/integer_input.html", "w") as integer_input_view:
-            subprocess.run(['bash', \
-                './app/templates/./integer_input', \
-                str(integer)], stdout=integer_input_view)
+        gen_integer_input = Generator()
+        gen_integer_input.integer_input_generator(form.integer.data)
         return redirect(url_for('main.integer_input'))
     return render_template('index.html', title='Tutorials', form=form)
 
