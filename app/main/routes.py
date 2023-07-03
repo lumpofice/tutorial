@@ -25,12 +25,18 @@ def integer_input():
 
 @bp.route('/uptime')
 def uptime():
-    pass
+    gen_uptime = Generator()
+    gen_uptime.uptime_generator()
+    return render_template('uptime.html', title='Tutorials')
 
-@bp.route('/diskspace')
-def diskspace():
-    pass
+@bp.route('/disk_space')
+def disk_space():
+    gen_disk_space = Generator()
+    gen_disk_space.disk_space_generator()
+    return render_template('disk_space.html', title='Tutorials')
 
-@bp.route('/homespace')
-def homespace():
-    pass
+@bp.route('/home_space')
+def home_space():
+    gen_home_space = Generator()
+    gen_home_space.home_space_generator()
+    return render_template('home_space.html', title='Tutorials')

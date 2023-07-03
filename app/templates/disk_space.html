@@ -1,0 +1,34 @@
+
+<html>
+	<head>
+		<title>Tutorials</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="styles/disk_space.css") }}'>
+	</head>
+	<body>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for("main.index") }}'>Home</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id='content'>
+			<div id='diskspace'>
+				<h1>Diskspace Report</h1>
+				
+	<h2 class=Message>Disk Space Utilization</h2>
+	<pre class=Message>Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        15G   13G  1.1G  93% /
+devtmpfs        1.8G     0  1.8G   0% /dev
+tmpfs           1.9G   49M  1.9G   3% /dev/shm
+tmpfs           1.9G  8.6M  1.9G   1% /run
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/mmcblk0p1  253M   49M  204M  20% /boot
+tmpfs           384M  4.0K  384M   1% /run/user/1000</pre>
+	
+			</div>
+	</body>
+</html>
+

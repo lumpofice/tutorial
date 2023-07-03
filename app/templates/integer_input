@@ -25,11 +25,23 @@ echo "
 <html>
 	<head>
 		<title>Tutorials</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{{ url_for(\"static\", filename=\"styles/integer_input.css\") }}'>
 	</head>
 	<body>
-		<h1>$RESULT</h1>
-		$(result_for_integer)
-		<p><a href='{{ url_for(\"main.index\") }}'>Back</a></p>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for(\"main.index\") }}'>Home</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id='content'>
+			<div id='integer'>
+				<p>Integer Classification</p>
+				<h1>$RESULT</h1>
+				$(result_for_integer)
+			</div>
 	</body>
 </html>
 "

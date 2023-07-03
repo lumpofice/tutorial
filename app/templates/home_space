@@ -1,0 +1,40 @@
+#!/bin/bash
+
+report_home_space () {
+	if [[ "$(id -u)" -eq 0 ]]; then
+		echo "
+		<h2 class="Message">Home Space Utilization (all users)</h2>
+		<pre class="Message">$(du -sh /home/*)</pre>
+		"
+	else
+		echo "
+		<h2 class="Message">Home Space Utilization ($USER)</h2>
+		<pre class="Message">$(du -sh $HOME)</pre>
+		"
+	fi
+	return
+}
+
+echo "
+<html>
+	<head>
+		<title>Tutorials</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{{ url_for(\"static\", filename=\"styles/home_space.css\") }}'>
+	</head>
+	<body>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for(\"main.index\") }}'>Home</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id='content'>
+			<div id='homespace'>
+				<h1>Homespace Report</h1>
+				$(report_home_space)
+			</div>
+	</body>
+</html>
+"

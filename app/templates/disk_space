@@ -1,0 +1,33 @@
+#!/bin/bash
+
+report_disk_space () {
+	echo "
+	<h2 class="Message">Disk Space Utilization</h2>
+	<pre class="Message">$(df -h)</pre>
+	"
+	return
+}
+
+echo "
+<html>
+	<head>
+		<title>Tutorials</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{{ url_for(\"static\", filename=\"styles/disk_space.css\") }}'>
+	</head>
+	<body>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for(\"main.index\") }}'>Home</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id='content'>
+			<div id='diskspace'>
+				<h1>Diskspace Report</h1>
+				$(report_disk_space)
+			</div>
+	</body>
+</html>
+"

@@ -25,18 +25,10 @@ body {
 	height: 100%;
 }
 
-
-#integer {
+#uptime {
 	padding: 1rem .5rem;
 	margin: 0 auto;
 }
-
-.uptime, .diskspace, .homespace {
-	width: 33%;
-	float: left;
-	margin: 0 auto;
-}
-
 
 li {
 	display: inline;
@@ -50,3 +42,4 @@ li {
 	}
 
 }
+

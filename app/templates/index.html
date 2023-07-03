@@ -6,51 +6,38 @@
 		<link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="styles/index.css") }}'>
 	</head>
 	<body>
-		<div class='Opening'>
-			<p id="greeting">Choose from the following:</p>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for("main.index") }}'>Home</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="IntegerInput">
-			<p>Integer Classification</p>
-			<form action="" method="post" novalidate>
-				{{ form.hidden_tag() }}
-				<p>
-					{{ form.integer.label }}<br>
-					{{ form.integer(size=32) }}
-					{% for error in form.integer.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-				</p>
-				<p>{{ form.submit() }}</p>
-			</form>
-		</div>
-		<div class="Uptime">
-			<p><a href='{{ url_for("main.uptime") }}'>View the Uptime Report</a></p>
+		<div id='content'>
+			<div id='integer'>
+				<p>Integer Classification</p>
 			
-	<h2 class=Message>System Uptime</h2>
-	<pre class=Message> 07:57:36 up  1:22,  2 users,  load average: 3.21, 1.02, 0.60</pre>
-	
-		</div>
-		<div class="DiskSpace">
-			<p><a href='{{ url_for("main.diskspace") }}'>View the Diskpace Report</a></p>
-			
-	<h2 class=Message>Disk Space Utilization</h2>
-	<pre class=Message>Filesystem      Size  Used Avail Use% Mounted on
-/dev/root        15G   13G  1.1G  93% /
-devtmpfs        1.8G     0  1.8G   0% /dev
-tmpfs           1.9G   46M  1.9G   3% /dev/shm
-tmpfs           1.9G  8.6M  1.9G   1% /run
-tmpfs           5.0M  4.0K  5.0M   1% /run/lock
-tmpfs           1.9G     0  1.9G   0% /sys/fs/cgroup
-/dev/mmcblk0p1  253M   49M  204M  20% /boot
-tmpfs           384M  4.0K  384M   1% /run/user/1000</pre>
-	
-		</div>
-		<div class="HomeSpace">
-			<p><a href='{{ url_for("main.homespace") }}'>View the Homespace Report</a></p>
-			
-		<h2 class=Message>Home Space Utilization (pi)</h2>
-		<pre class=Message>4.1G	/home/pi</pre>
-		
+				<form action="" method="post" novalidate>
+					{{ form.hidden_tag() }}
+					<p>
+						{{ form.integer.label }}<br>
+						{{ form.integer(size=32) }}
+						{% for error in form.integer.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>{{ form.submit() }}</p>
+				</form>
+			</div>
+			<div class="uptime">
+				<p><a href='{{ url_for("main.uptime") }}'>View the Uptime Report</a></p>
+			</div>
+			<div class="diskSpace">
+				<p><a href='{{ url_for("main.disk_space") }}'>View the Diskpace Report</a></p>
+			</div>
+			<div class="homeSpace">
+				<p><a href='{{ url_for("main.home_space") }}'>View the Homespace Report</a></p>
+			</div>
 		</div>
 	</body>
 </html>

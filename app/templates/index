@@ -5,36 +5,8 @@ CURRENT_TIME="$(date +'%x %r %Z')"
 TIMESTAMP="Generated $CURRENT_TIME by $USER"
 BROWSER_MESSAGE="Hi $USER! You need to check your prompt!"
 
-report_uptime () {
-	echo "
-	<h2 class="Message">System Uptime</h2>
-	<pre class="Message">$(uptime)</pre>
-	"
-	return
-}
 
-report_disk_space () {
-	echo "
-	<h2 class="Message">Disk Space Utilization</h2>
-	<pre class="Message">$(df -h)</pre>
-	"
-	return
-}
 
-report_home_space () {
-	if [[ "$(id -u)" -eq 0 ]]; then
-		echo "
-		<h2 class="Message">Home Space Utilization (all users)</h2>
-		<pre class="Message">$(du -sh /home/*)</pre>
-		"
-	else
-		echo "
-		<h2 class="Message">Home Space Utilization ($USER)</h2>
-		<pre class="Message">$(du -sh $HOME)</pre>
-		"
-	fi
-	return
-}
 
 echo "
 <html>
@@ -44,34 +16,38 @@ echo "
 		<link rel='stylesheet' type='text/css' href='{{ url_for(\"static\", filename=\"styles/index.css\") }}'>
 	</head>
 	<body>
-		<div class='Opening'>
-			<p id=\"greeting\">Choose from the following:</p>
+		<div id='opening'>
+			<div id='nav'>
+				<ul>
+					<li><a href='{{ url_for(\"main.index\") }}'>Home</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class=\"IntegerInput\">
-			<p>Integer Classification</p>
-			<form action=\"\" method=\"post\" novalidate>
-				{{ form.hidden_tag() }}
-				<p>
-					{{ form.integer.label }}<br>
-					{{ form.integer(size=32) }}
-					{% for error in form.integer.errors %}
-					<span style=\"color: red;\">[{{ error }}]</span>
-					{% endfor %}
-				</p>
-				<p>{{ form.submit() }}</p>
-			</form>
-		</div>
-		<div class=\"Uptime\">
-			<p><a href='{{ url_for(\"main.uptime\") }}'>View the Uptime Report</a></p>
-			$(report_uptime)
-		</div>
-		<div class=\"DiskSpace\">
-			<p><a href='{{ url_for(\"main.diskspace\") }}'>View the Diskpace Report</a></p>
-			$(report_disk_space)
-		</div>
-		<div class=\"HomeSpace\">
-			<p><a href='{{ url_for(\"main.homespace\") }}'>View the Homespace Report</a></p>
-			$(report_home_space)
+		<div id='content'>
+			<div id='integer'>
+				<p>Integer Classification</p>
+			
+				<form action=\"\" method=\"post\" novalidate>
+					{{ form.hidden_tag() }}
+					<p>
+						{{ form.integer.label }}<br>
+						{{ form.integer(size=32) }}
+						{% for error in form.integer.errors %}
+						<span style=\"color: red;\">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>{{ form.submit() }}</p>
+				</form>
+			</div>
+			<div class=\"uptime\">
+				<p><a href='{{ url_for(\"main.uptime\") }}'>View the Uptime Report</a></p>
+			</div>
+			<div class=\"diskSpace\">
+				<p><a href='{{ url_for(\"main.disk_space\") }}'>View the Diskpace Report</a></p>
+			</div>
+			<div class=\"homeSpace\">
+				<p><a href='{{ url_for(\"main.home_space\") }}'>View the Homespace Report</a></p>
+			</div>
 		</div>
 	</body>
 </html>
