@@ -4,6 +4,8 @@
 
 body {
 	padding: 1rem .5rem;
+	font-size: 1.3rem;
+	line-height: 1.2;
 	max-width: 60rem;
 	margin: 0 auto;
 	background-color: #c7d6ed;
@@ -11,15 +13,12 @@ body {
 
 .Opening {
 	color: #32274d;
+	text-align: center;
 	border-bottom: 8px double #036082;
 	margin-bottom: 2rem;
 	padding-bottom: 1rem;
 }
 
-form {
-       	color: red;
-	font-size: 24px;	
-}
 
 
 @media screen and (min-width: 50rem) {
@@ -29,48 +28,4 @@ form {
 		padding: 1rem 2rem;
 	}
 
-	.Opening {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-	}
-
-
-	.Header {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-	}
-
-	.Message {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-		color: #0D20A1;
-		text-align: left;
-	}
-
-	.Left {
-		text-align: left;
-		display: table-cell;
-		width: 50%;
-	}
-
-	.FirstRefrain {
-		text-align: left;
-		display: table-cell;
-		width: 50%;
-	}
-
-	.Right {
-		text-align: right;
-		display: table-cell;
-		width: 50%;
-	}
-
-	.SecondRefrain {
-		text-align: right;
-		display: table-cell;
-		width: 50%;
-	}
 }

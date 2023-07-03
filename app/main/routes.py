@@ -21,3 +21,16 @@ def index():
 @bp.route('/integer_input')
 def integer_input():
     return render_template('integer_input.html', title='Tutorials')
+
+
+@bp.route('/uptime')
+def uptime():
+    pass
+
+@bp.route('/diskspace')
+def diskspace():
+    pass
+
+@bp.route('/homespace')
+def homespace():
+    pass
