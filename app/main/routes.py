@@ -14,7 +14,7 @@ def index():
     form = IntegerInputForm()
     if form.validate_on_submit():
         gen_integer_input = Generator()
-        gen_integer_input.integer_input_generator(form.integer.data)
+        gen_integer_input.integer_input_generator(form.integer.data, form.count.data)
         return redirect(url_for('main.integer_input'))
     return render_template('index.html', title='Tutorials', form=form)
 

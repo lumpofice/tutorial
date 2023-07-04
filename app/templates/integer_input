@@ -1,15 +1,17 @@
 #!/bin/bash
 
-RESULT="The integer is $1"
-INT=$1
+INTEGER_CLASSIFICATION="The integer is $1"
+INTEGER_SCALAR_FACTORIAL="Multiplying $1 by $2! gives us"
+integer=$1
+bound=$2
 
-result_for_integer () {
-	if (( INT == 0 )); then
+integer_classification () {
+	if (( integer == 0 )); then
 		echo "
 		<p>Our integer is 0</p>
 		"
 	else
-		if (( INT < 0 )); then
+		if (( integer < 0 )); then
 			echo "
 			<p>Our integer is negative</p>
 			"
@@ -19,6 +21,19 @@ result_for_integer () {
 			"
 		fi
 	fi
+}
+
+integer_scalar_factorial () {
+
+
+	count=1
+
+	while [[ "$count" -le "$bound" ]]; do
+		integer=$((integer*count))
+		count=$((count + 1))
+	done
+
+	echo "$integer"
 }
 
 echo "
@@ -39,8 +54,10 @@ echo "
 		<div id='content'>
 			<div id='integer'>
 				<p>Integer Classification</p>
-				<h1>$RESULT</h1>
-				$(result_for_integer)
+				<p>$INTEGER_CLASSIFICATION</p>
+				<p>$(integer_classification)</p>
+				<p>$INTEGER_SCALAR_FACTORIAL</p>
+				<p>$(integer_scalar_factorial)</p>
 			</div>
 	</body>
 </html>

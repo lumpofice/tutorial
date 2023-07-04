@@ -7,11 +7,11 @@ class Generator():
         with open('app/templates/index.html', 'w') as index_view:
             subprocess.run(index_view_script, stdout=index_view)
 
-    def integer_input_generator(self, integer):
+    def integer_input_generator(self, integer, count):
         with open("app/templates/integer_input.html", "w") as integer_input_view:
             subprocess.run(['bash', \
                 './app/templates/./integer_input', \
-                str(integer)], stdout=integer_input_view)
+                str(integer), str(count)], stdout=integer_input_view)
 
     def uptime_generator(self):
         with open("app/templates/uptime.html", "w") as uptime_view:

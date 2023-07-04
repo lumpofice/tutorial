@@ -15,18 +15,25 @@
 		</div>
 		<div id='content'>
 			<div id='integer'>
-				<p>Integer Classification</p>
+				<h4>Integer Classification</h4>
 			
 				<form action="" method="post" novalidate>
 					{{ form.hidden_tag() }}
 					<p>
 						{{ form.integer.label }}<br>
-						{{ form.integer(size=32) }}
+						{{ form.integer(style="width: 12rem; padding: 1rem .5rem;") }}<br>
 						{% for error in form.integer.errors %}
 						<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
-					<p>{{ form.submit() }}</p>
+					<p>
+						{{ form.count.label }}<br>
+						{{ form.count(style="width: 12rem; padding: 1rem .5rem;") }}<br>
+						{% for error in form.count.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+					</p>
+					<p>{{ form.submit(style="width: 4rem; padding: .5rem .25rem;") }}</p>
 				</form>
 			</div>
 			<div class="uptime">
