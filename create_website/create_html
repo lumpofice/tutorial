@@ -1,0 +1,51 @@
+#!/bin/bash
+
+create_html() {
+	exec 1> "$2".html
+	cat<<-END
+<!doctype html>
+<html>
+        <head>
+                <title>$1</title>
+        </head>
+        <body>
+                <h1>This is the $2 page.</h1>
+        </body>
+</html>
+	END
+	return
+}
+
+create_html_css() {
+	exec 1> "$2".html
+	cat<<-END
+<!doctype html>
+<html>
+        <head>
+                <title>$1</title>
+                <link rel='stylesheet' href='{{ url_for("static", filename="styles/$2.css") }}'>
+        </head>
+        <body>
+                <h1>This is the $2 page.</h1>
+        </body>
+</html>
+	END
+	return
+}
+
+echo "What is the name of the webpage?"
+read webpage_name
+
+echo "What is the title of this webpage? "
+read webpage_title
+
+echo "Is there a CSS file? (If so, type yes)"
+read css_response
+
+
+if [[ "$css_response" == "yes" ]]; then
+	create_html_css "$webpage_title" "$webpage_name" 
+else
+	create_html "$webpage_title" "$webpage_name"
+fi	
+
