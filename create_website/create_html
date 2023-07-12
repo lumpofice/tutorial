@@ -29,15 +29,101 @@ create_html_css() {
 <html>
         <head>
                 <title>$1</title>
-                <link rel='stylesheet' href='{{ url_for("static", filename="$3/static/styles/$2.css") }}'>
+                <meta name="viewport" content="width=device-width">
+                <link rel='stylesheet' href="$3/static/styles/$2.css">
         </head>
         <body>
-                <h1>This is the $2 page.</h1>
+                <div id='opening'>
+                        <div id='nav'>
+                                <ul>
+                                        <li>Home</li>
+                                        <li>Other Page</li>
+                                        <li>Another Page</li>
+                                </ul>
+                        </div>
+                </div>
+                <div id='content'>
+                        <div id='feature'>
+                        </div>
+                        <div class='feature1'>
+                                <p class='feature'>Hello $2</p>
+                        </div>
+                        <div class='feature2'>
+                                <p class='feature'>Hello $2 again</p>
+                        </div>
+                        <div class='feature3'>
+                                <p class='feature'>And for the last time</p>
+                        </div>
+                </div>    
         </body>
 </html>
 	END
 	return
 }
+
+
+css () {
+	exec 1> "$2/static/styles/$1.css"
+	cat<<-END
+* {
+        box-sizing: border-box;
+}
+
+body {
+        font-size: 1.3rem;
+        padding: 1rem .5rem;
+        line-height: 1.2;
+        max-width: 60rem;
+        margin: 0 auto;
+        color: #333333;
+        background-color: $3;
+}
+
+#nav {
+        padding: 1rem .5rem;
+        margin: 0 auto;
+        color: #333333;
+        text-align: center;
+        border-bottom: 8px double #f9f9f9;
+        margin-bottom: 2rem;
+}
+
+li {
+        display: inline;
+}
+
+#content {
+        overflow: auto;
+        height: 100%;
+}
+
+#feature {
+        padding: 1rem .5rem;
+        margin: 0 auto;
+}
+
+.feature1, .feature2, .feature3 {
+        width: 33.33%;
+        float: left;
+        margin: 0 auto;
+}
+
+p.feature {
+        text-align: center;
+}
+
+@media screen and (min-width: 15rem) {
+        body {
+                border-left: 4px solid #f9f9f9;
+                border-right: 4px solid #f9f9f9;
+                padding: 1rem 2rem;
+        }
+}
+
+	END
+	return
+}
+
 
 echo "What is the name of the webpage?"
 read webpage_name
@@ -52,7 +138,10 @@ echo "Where will you be putting these files (absolute path)?"
 read location
 
 if [[ "$css_response" == "yes" ]]; then
-	create_html_css "$webpage_title" "$webpage_name" "$location" 
+	echo "Which background color for your $webpage_name page?"
+	read background_color
+	create_html_css "$webpage_title" "$webpage_name" "$location"
+	css "$webpage_name" "$location" "$background_color"
 else
 	create_html "$webpage_title" "$webpage_name" "$location"
 fi	
