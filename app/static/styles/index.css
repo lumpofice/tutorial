@@ -38,6 +38,9 @@ body {
 	margin: 0 auto;
 }
 
+p.report {
+	text-align: center;
+}
 
 li {
 	display: inline;
