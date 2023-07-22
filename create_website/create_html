@@ -29,7 +29,20 @@ create_app_file() {
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+create_config_file() {
+	exec 1> "$1"/config.py
+	cat<<-END
+	import os
+	from dotenv import load_dotenv
 
+	basedir = os.path.abspath(os.path.dirname(__file__))
+	load_dotenv(os.path.join(basedir, '.env'))
+
+	class Config(object):
+	    SECRET_KEY = os.environ.get('SECRET_KEY') or 'password'	
+	END
+	return
+}
 
 
 
@@ -41,50 +54,50 @@ create_app_file() {
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-create_html_and_css() {
+create_html() {
 	mkdir $3/templates
 	mkdir $3/static
 	mkdir $3/static/styles
 	exec 1> "$3/templates/$2".html
 	cat<<-END
-<!doctype html>
-<html>
-        <head>
-                <title>$1</title>
-                <meta name="viewport" content="width=device-width">
-                <link rel='stylesheet' href="$3/static/styles/$2.css">
-        </head>
-        <body>
-                <div id='opening'>
-                        <div id='nav'>
-                                <ul>
-                                        <li>Home</li>
-                                        <li>Other Page</li>
-                                        <li>Another Page</li>
-                                </ul>
-                        </div>
-                </div>
-                <div id='content'>
-                        <div id='features'>
-                        </div>
-                        <div class='feature1'>
-                                <p class='feature'>Hello $2</p>
-                        </div>
-                        <div class='feature2'>
-                                <p class='feature'>Hello $2 again</p>
-                        </div>
-                        <div class='feature3'>
-                                <p class='feature'>And for the last time</p>
-                        </div>
-                </div>    
-        </body>
-</html>
+	<!doctype html>
+	<html>
+	        <head>
+	                <title>$1</title>
+	                <meta name="viewport" content="width=device-width">
+	                <link rel='stylesheet' href="$3/static/styles/$2.css">
+	        </head>
+	        <body>
+	                <div id='opening'>
+	                        <div id='nav'>
+	                                <ul>
+	                                        <li>Home</li>
+	                                        <li>Other Page</li>
+	                                        <li>Another Page</li>
+	                                </ul>
+	                        </div>
+	                </div>
+	                <div id='content'>
+	                        <div id='features'>
+	                        </div>
+	                        <div class='feature1'>
+	                                <p class='feature'>Hello $2</p>
+	                        </div>
+	                        <div class='feature2'>
+	                                <p class='feature'>Hello $2 again</p>
+	                        </div>
+	                        <div class='feature3'>
+	                                <p class='feature'>And for the last time</p>
+	                        </div>
+	                </div>    
+	        </body>
+	</html>
 	END
 	return
 }
 
 
-css () {
+create_css() {
 	exec 1> "$2/static/styles/$1".css
 	cat<<-END
 * {
@@ -169,6 +182,7 @@ echo "Which background color for your $webpage_name page?"
 read background_color
 
 create_app_file "$location" "$app_name"
-create_html_and_css "$webpage_title" "$webpage_name" "$location"
-css "$webpage_name" "$location" "$background_color"
+create_config_file "$location"
+create_html "$webpage_title" "$webpage_name" "$location"
+create_css "$webpage_name" "$location" "$background_color"
 
