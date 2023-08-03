@@ -163,26 +163,44 @@ p.feature {
 #top-level application file user input----------------------------------------
 #-----------------------------------------------------------------------------
 echo "Where will you be putting these files (absolute path)?"
-read location
 
-echo "What will be the name of your top level application file?"
-read app_name
+# Turning the read output to an array, with each element separated by '/'
+IFS='/' read -ra location
 
+# Assign a variable to the array and then remove last element
+location_array=("${location[@]}"); unset "location_array[-1]"
 
+# Join the location_array array elements to a string and assign this string
+# to a variable b
+b=`IFS=/; echo "${location_array[*]}"`
 
-#html and css files user input------------------------------------------------
-#-----------------------------------------------------------------------------
-echo "What is the name of the webpage?"
-read webpage_name
+desired_location=`IFS=/; echo "${location[*]}"`
 
-echo "What is the title of this webpage? "
-read webpage_title
+# Confirm that variable b is a directory
+if [ -d ${b} ]; then
+	echo "Your directory ${desired_location} is being created"
 
-echo "Which background color for your $webpage_name page?"
-read background_color
+	echo "What will be the name of your top level application file?"
+	read app_name
+		
+	#html and css files user input----------------------------------------
+	#---------------------------------------------------------------------
+	echo "What is the name of the webpage?"
+	read webpage_name
+	
+	echo "What is the title of this webpage? "
+	read webpage_title
+	
+	echo "Which background color for your $webpage_name page?"
+	read background_color
+	
+	create_app_file "$desired_location" "$app_name"
+	create_config_file "$desired_location"
+	create_html "$webpage_title" "$webpage_name" "$desired_location"
+	create_css "$webpage_name" "$desired_location" "$background_color"
 
-create_app_file "$location" "$app_name"
-create_config_file "$location"
-create_html "$webpage_title" "$webpage_name" "$location"
-create_css "$webpage_name" "$location" "$background_color"
+else
+	echo "Error: What you've input is not a directory"
+fi
+
 
