@@ -81,13 +81,13 @@ create_html() {
 	                        <div id='features'>
 	                        </div>
 	                        <div class='feature1'>
-	                                <p class='feature'>Hello $2</p>
+	                                <p class='feature'>Text 1 $2</p>
 	                        </div>
 	                        <div class='feature2'>
-	                                <p class='feature'>Hello $2 again</p>
+	                                <p class='feature'>Text 2 $2 again</p>
 	                        </div>
 	                        <div class='feature3'>
-	                                <p class='feature'>And for the last time</p>
+	                                <p class='feature'>Text 3</p>
 	                        </div>
 	                </div>    
 	        </body>
@@ -196,19 +196,33 @@ if [ -d ${location_array_string} ]; then
 
 	if [ "${#background_color}" -eq 7 ]; then
 		if [[ "${background_color:0:1}" == "#" ]]; then
-			pattern=[0123456789ABCDEFabcdef]
+			pattern='[0123456789ABCDEFabcdef]'
 			
-			if [[ "${background_color:1:6}" =~ $pattern ]]; then
+			for (( i=1; i<${#background_color}; i=i+1 )); do
 
-			create_app_file "$desired_location" "$app_name"
-			create_config_file "$desired_location"
-			create_html "$webpage_title" "$webpage_name" "$desired_location"
-			create_css "$webpage_name" "$desired_location" "$background_color"
+				if [[ "${background_color:$i:1}" \
+					=~ $pattern ]]; then continue
+				else
+					echo "Error: Problem "\
+						"with hexidecimal input"
+					break
+				fi
+			done
+
+			if [[ $i == 7 ]]; then
+				create_app_file "$desired_location" "$app_name"
+				create_config_file "$desired_location"
+				create_html "$webpage_title" "$webpage_name" \
+					"$desired_location"
+				create_css "$webpage_name" "$desired_location" \
+					"$background_color"
+			fi
+			
 		else
-			echo "Problem with hexidecimal input"
+			echo "Error: The first character needs to be a #"
 		fi
 	else
-		echo "Problem with length"
+		echo "Error: Problem with the length of your input"
 	fi	
 else
 	echo "Error: What you've input is not a directory"
