@@ -22,6 +22,59 @@ create_app_file() {
 
 
 
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+# Creating the app-level init file
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+create_app_level_init_file() {
+	exec 1> "$1/__init__".py
+	cat<<-END
+	from config import Config
+	import logging
+	from logging.handlers import RotatingFileHandler
+	import os
+	from flask import Flask
+
+	def create_app(config_class=Config):
+	    app = Flask(__name__)
+	    app.config.from_object(config_class)
+
+	    from app.errors import bp as errors_bp
+	    app.register_blueprint(main_bp)
+
+	    from app.main import bp as main_bp
+	    app.register_blueprint(main_bp)
+
+	    if not app.debug and not app.testing:
+	        if not os.path.exists('logs'):
+	            os.mkdir('logs')
+	        file_handler = RotatingFileHandler('logs/$2.log',\\
+	            maxBytes=10240, backupCount=10)
+	        file_handler.setFormatter(logging.Formatter(
+	            '%(asctime)s %(levelname)s:' \\
+	                '%(message)s [in %(pathname)s:%(lineno)d]'))
+	        file_handler.setLevel(logging.INFO)
+	        app.logger.addHandler(file_handler)
+
+	        app.logger.setLevel(logging.INFO)
+	        app.logger.info('$2 startup')
+
+	    return app
+	END
+	return	
+}
+
+
+
+
+
+
+
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -50,11 +103,11 @@ create_config_file() {
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-# Creating the html and css files
+# Creating the index page html and css files
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-create_html() {
+create_index_html() {
 	mkdir $3/templates
 	mkdir $3/static
 	mkdir $3/static/styles
@@ -72,8 +125,6 @@ create_html() {
 	                        <div id='nav'>
 	                                <ul>
 	                                        <li>Home</li>
-	                                        <li>Other Page</li>
-	                                        <li>Another Page</li>
 	                                </ul>
 	                        </div>
 	                </div>
@@ -81,10 +132,10 @@ create_html() {
 	                        <div id='features'>
 	                        </div>
 	                        <div class='feature1'>
-	                                <p class='feature'>Text 1 $2</p>
+	                                <p class='feature'>Text 1</p>
 	                        </div>
 	                        <div class='feature2'>
-	                                <p class='feature'>Text 2 $2 again</p>
+	                                <p class='feature'>Text 2</p>
 	                        </div>
 	                        <div class='feature3'>
 	                                <p class='feature'>Text 3</p>
@@ -97,7 +148,7 @@ create_html() {
 }
 
 
-create_css() {
+create_index_css() {
 	exec 1> "$2/static/styles/$1".css
 	cat<<-END
 * {
@@ -170,13 +221,13 @@ IFS='/' read -ra location
 # Assign a variable to the array and then remove last element
 location_array=("${location[@]}"); unset "location_array[-1]"
 
-# Join the location_array array elements to a string and assign this string
-# to a variable b
+# Join the location_array elements by '/' characters and assign this string
+# to a variable location_array_string
 location_array_string=`( IFS=$'/'; echo "${location_array[*]}" )`
 
 desired_location=`( IFS=$'/'; echo "${location[*]}" )`
 
-# Confirm that variable b is a directory
+# Confirm that variable location_array_string is a directory
 if [ -d ${location_array_string} ]; then
 	echo "Your directory ${desired_location} is being created"
 
@@ -211,11 +262,13 @@ if [ -d ${location_array_string} ]; then
 
 			if [[ $i == 7 ]]; then
 				create_app_file "$desired_location" "$app_name"
+				create_app_level_init_file "$desired_location" "$app_name" 
 				create_config_file "$desired_location"
-				create_html "$webpage_title" "$webpage_name" \
+				create_index_html "$webpage_title" "$webpage_name" \
 					"$desired_location"
-				create_css "$webpage_name" "$desired_location" \
+				create_index_css "$webpage_name" "$desired_location" \
 					"$background_color"
+				cp ./requirements.txt "$desired_location"
 			fi
 			
 		else
