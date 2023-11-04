@@ -1,3 +1,5 @@
+# My version of Agarwal's Singly Linked List
+
 class Node:
     """ A singly-linked node. """
     def __init__(self, data=None):
@@ -145,22 +147,7 @@ print(words.size)
 print(" ")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# My version of Agarwal's Doubly Linked List
 
 class Node:
     def __init__ (self, data = None, next = None, prev = None):
@@ -356,14 +343,13 @@ while current:
 print(" ")
 
 
+# My version of Agarwal's Circular List 
+
 class Node:
     """ A Circular linked node. """
     def __init__(self, data=None):
         self.data = data
         self.next = None
-
-
-
 
 class CircularList:
     def __init__ (self):
@@ -489,3 +475,79 @@ for item in words.iter():
     if counter > words.size:
         break
 print(words.size)
+print('')
+
+
+# My version Floyd's Cycle Finding Algorithm
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularList:
+    def __init__(self):
+        self.tail = None
+        self.head = None
+        self.size = 0
+
+    def append(self, data):
+        node = Node(data)
+        if self.tail is None:
+            self.head = node
+            self.tail = node
+            self.tail.next = self.tail
+        else:
+            self.tail.next = node
+            self.tail = node
+            node.next = self.head # Toggle this on/off for loop/not
+        self.size += 1
+
+    def iter(self):
+        current = self.head
+        while current:
+            val = current.data
+            current = current.next
+            yield val
+
+    def floydsCycle(self):
+        slow_pointer = self.head
+        fast_pointer = self.head
+
+        while (slow_pointer != None 
+                and fast_pointer != None
+                and fast_pointer.next != None):
+            slow_pointer = slow_pointer.next
+            fast_pointer = fast_pointer.next.next
+            if (slow_pointer == fast_pointer):
+                print("OK WE BREAK at {}".format(slow_pointer.data))
+                return slow_pointer.data
+
+        if (slow_pointer != fast_pointer):
+            return None
+
+print('Let us begin the output of Floyd\'s Cycle Finding Algorithm.')
+print('----------------------')
+print('----------------------')
+print('----------------------')
+print('----------------------')
+words = CircularList()
+words.append('eggs')
+words.append('ham')
+words.append('spam')
+
+print('Let us display the members of the list.')
+current = words.head
+count = 1
+while count <= words.size:
+    print(current.data)
+    current = current.next
+    count += 1
+
+print('')
+
+loop_start = words.floydsCycle()
+if (loop_start == None):
+    print('List contains no loop.')
+else:
+    print('List contains a loop at {}'.format(loop_start))
