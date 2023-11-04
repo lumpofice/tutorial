@@ -355,3 +355,137 @@ while current:
     current = current.next
 print(" ")
 
+
+class Node:
+    """ A Circular linked node. """
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+
+
+
+class CircularList:
+    def __init__ (self):
+        self.tail = None
+        self.head = None
+        self.size = 0
+
+    def append(self, data):
+        node = Node(data)
+        if self.tail:
+            self.tail.next = node
+            self.tail = node
+            node.next = self.head
+        else:
+            print("WE STARTED HERE")
+            self.head = node
+            self.tail = node
+            self.tail.next = self.tail
+        self.size += 1
+
+    def delete(self, data):
+        current = self.head
+        prev = self.head
+        flag = True
+        while flag or prev != self.tail:
+            if current.data == data:
+                if current == self.head:
+                    #item to be deleted is head node
+                    if self.size == 1:
+                        self.head = None
+                        self.tail = None
+                        return
+                    self.head = current.next
+                    self.tail.next = self.head
+                elif current == self.tail:
+                    #item to be deleted is tail node
+                    self.tail = prev
+                    prev.next = self.head
+                else:
+                    #item to be deleted is an intermediate node
+                    prev.next = current.next
+                self.size -= 1
+                return
+            prev = current
+            current = current.next
+            if current == self.head:
+                flag = False
+        if flag is False:
+            print("Item not present in the list")
+
+
+    def iter(self):
+        current = self.head
+        while current:
+            val = current.data
+            current = current.next
+            yield val
+
+
+print("Let's begin the output of the CircularList:")
+print("--------------------------")
+print("--------------------------")
+print("--------------------------")
+print(" ")
+words = CircularList()
+words.append('eggs')
+words.append('ham')
+words.append('spam')
+
+print("Here are the members of the list, so far, followed by the count.")
+counter = 1
+for word in words.iter():
+    print(word)
+    counter += 1
+    if counter > words.size:
+        break
+print(words.size)
+
+
+print("Let's put some more items in the list.")
+print(" ")
+words.append('foo')
+words.append('bar')
+words.append('bim')
+words.append('baz')
+words.append('quux')
+words.append('duux')
+
+print("Which items, and how many, are in the list, now?")
+counter = 1
+for item in words.iter():
+    print(item)
+    counter += 1
+    if counter > words.size:
+        break
+print(words.size)
+print("")
+
+
+print("Now we try to delete something that isn't there.")
+words.delete('socks')
+print("")
+
+print('We check to make sure our list has not changed')
+counter = 1
+for item in words.iter():
+    print(item)
+    counter += 1
+    if counter > words.size:
+        break
+print(words.size)
+print("")
+
+print('Let us delete something that is there.')
+words.delete('ham')
+print("")
+
+print('We check to make sure our list has changed accordingly')
+counter = 1
+for item in words.iter():
+    print(item)
+    counter += 1
+    if counter > words.size:
+        break
+print(words.size)
