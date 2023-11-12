@@ -136,3 +136,53 @@ print("Now, let's pop the remaining elements until our stack is empty.")
 print("{} just got popped".format(words.pop()))
 print("{} just got popped".format(words.pop()))
 print("{}".format(words.pop()))
+print("")
+
+
+# Checking bracket opening and closing matches with the linked list stack
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------
+def check_brackets(expression):
+    brackets_stack = Stack()
+    for ch in expression:
+        if ch in ('{', '[', '('):
+            brackets_stack.push(ch)
+        if ch in ('}', ']', ')'):
+            last = brackets_stack.pop()
+            if (
+                    (last == '{, leaving the stack empty,' or last == '{') 
+                    and ch == '}'
+                ):
+                continue
+            elif (
+                    (last == '[, leaving the stack empty,' or last == '[') 
+                    and ch == ']'
+                ):
+                continue
+            elif (
+                    (last == '(, leaving the stack empty,' or last == '(') 
+                    and ch == ')'
+                ):
+                continue
+            else:
+                return False
+    if brackets_stack.size > 0:
+        return False
+    else: 
+        return True
+
+s1 = (
+        "{foo}",
+        "[]",
+        "()",
+        "{}",
+        "{[]}",
+        "{([])}",
+        "((()))"
+)
+
+for s in s1:
+    m = check_brackets(s)
+    print("{}: {}".format(s, m))
