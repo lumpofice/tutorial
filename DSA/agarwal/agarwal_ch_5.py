@@ -186,3 +186,43 @@ s1 = (
 for s in s1:
     m = check_brackets(s)
     print("{}: {}".format(s, m))
+print("")
+
+
+# List-based queue
+# ----------------
+# ----------------
+# ----------------
+class ListQueue:
+    def __init__(self):
+        self.front = self.rear = 0
+        self.items = []
+        self.size = 3
+
+    def enqueue(self, data):
+        if self.rear == self.size:
+            print("Queue is full")
+        else:
+            self.items.append(data)
+            self.rear += 1
+
+    def dequeue(self):
+        if self.front == self.rear:
+            print("Queue is empty")
+        else:
+            data = self.items.pop(0)
+            self.size -= 1
+            return data
+
+the_queue = ListQueue()
+the_queue.enqueue("first")
+the_queue.enqueue("second")
+the_queue.enqueue("third")
+the_queue.enqueue("fourth")
+print(the_queue.items)
+print("")
+
+the_queue.dequeue()
+the_queue.dequeue()
+the_queue.dequeue()
+print(the_queue.size)
