@@ -1,6 +1,14 @@
 using LinearAlgebra;
 using VMLS;
 
+#= This is an example of Chebyshev's inequality, in which variable 
+a is a single, fixed value 
+_______________________________________
+_______________________________________
+_______________________________________
+_______________________________________
+=# 
+
 n = 50;
 x = rand(1:n, 40, 1);
 count = 0;
@@ -37,4 +45,41 @@ lhs_cheby_std = count/size(x, 1);
 println("Here is Chebyshev for standard deviation");
 println("LHS: ", lhs_cheby_std);
 println("RHS: ", rhs_cheby_std);
+println()
 
+
+#= This is an example of Chebyshev's inequality, 
+in which each variable a is a component of a vector 
+_______________________________________
+_______________________________________
+_______________________________________
+_______________________________________
+=#
+
+a = rand(1:50, 100, 1)
+
+x = rand(1:50, 30, 1)
+demean(x) = x .-avg(x)
+
+println("Here is Chebyshev from a vector of a variables.")
+println()
+
+count = 0
+
+for i = 1:size(a)[1]
+	for j = 1:size(x)[1]
+		if abs(demean(x)[j]) > abs(a[i] - avg(x))
+			global count += 1
+		end
+	end
+	if count/size(x)[1] >= (stdev(x)/abs(a[i] - avg(x)))^2
+		println("Chebyshev did not hold.")
+		println("LHS:", " ", count/size(x)[1])
+		println("RHS:", " ", (stdev(x)/(a[i] - avg(x)))^2)
+		println("-----------------------")
+	else
+		println("LHS:", " ", count/size(x)[1])
+		println("RHS:", " ", (stdev(x)/(a[i] - avg(x)))^2)
+		println("------------------------")
+	end
+end
