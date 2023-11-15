@@ -189,6 +189,7 @@ for s in s1:
 print("")
 
 
+
 # List-based queue
 # ----------------
 # ----------------
@@ -212,17 +213,92 @@ class ListQueue:
         else:
             data = self.items.pop(0)
             self.size -= 1
+            self.rear -= 1
             return data
 
+print("Let's add elements to the array-based queue.")
 the_queue = ListQueue()
 the_queue.enqueue("first")
 the_queue.enqueue("second")
 the_queue.enqueue("third")
 the_queue.enqueue("fourth")
+print("")
+print("Here are the items in the array-based queue:")
 print(the_queue.items)
 print("")
-
-the_queue.dequeue()
-the_queue.dequeue()
-the_queue.dequeue()
+print("What is the size of our array-based queue?")
 print(the_queue.size)
+print("")
+
+print("Let's remove some items, then check the size.")
+the_queue.dequeue()
+the_queue.dequeue()
+the_queue.dequeue()
+print("We have removed some items. Here is the new size:")
+print(the_queue.size)
+print("")
+
+print("Let's try removing one more item.")
+the_queue.dequeue()
+print("")
+
+
+# Linked list queue
+# ----------------
+# ----------------
+# ----------------
+class Node:
+    def __init__(self, data=None, nex=None, prev=None):
+        self.data = data
+        self.nex = nex
+        self.prev = prev
+
+class Queue:
+    def __init__(self):
+        self.size = 0
+        self.head = None
+        self.tail = None
+
+    def enqueue(self, data):
+        new = Node(data, None, None)
+        if self.head == None:
+            self.head = new
+            self.tail = self.head
+        else:
+            new.prev = self.tail
+            self.tail.nex = new
+            self.tail = new
+        self.size += 1
+
+    def dequeue(self):
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+            self.size -= 1
+        elif self.size > 1:
+            self.head = self.head.nex
+            self.head.prev = None
+            self.size -= 1
+        elif self.size < 1:
+            return "Queue is empty"
+
+print("Let's add elements to the linked list based queue")
+queue = Queue()
+queue.enqueue("gain")
+queue.enqueue("function")
+queue.enqueue("loss")
+print("")
+
+print("We have added items to the queue. Let's check the size.")
+print(queue.size)
+print("")
+
+print("Now, let's remove an item from the linked list queue.")
+queue.dequeue()
+print("")
+
+print("An item has been removed from the linked list queue.")
+print("Let's check the new size.")
+print(queue.size)
+print("")
+
