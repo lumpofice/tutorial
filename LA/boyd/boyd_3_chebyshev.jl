@@ -64,22 +64,27 @@ demean(x) = x .-avg(x)
 println("Here is Chebyshev from a vector of a variables.")
 println()
 
-count = 0
 
 for i = 1:size(a)[1]
+	count = 0
 	for j = 1:size(x)[1]
-		if abs(demean(x)[j]) > abs(a[i] - avg(x))
-			global count += 1
+		if abs(demean(x)[j]) > a[i]
+			count += 1
 		end
 	end
-	if count/size(x)[1] >= (stdev(x)/abs(a[i] - avg(x)))^2
+	println("**************************************")
+	println("********a is: ", a[i], "**************")
+	println("********count is: ", count, "*********")
+	println("********std is: ", stdev(x), "*********")
+	println("**************************************")
+	if count/size(x)[1] >= (stdev(x)/a[i])^2
 		println("Chebyshev did not hold.")
 		println("LHS:", " ", count/size(x)[1])
-		println("RHS:", " ", (stdev(x)/(a[i] - avg(x)))^2)
+		println("RHS:", " ", (stdev(x)/a[i])^2)
 		println("-----------------------")
 	else
 		println("LHS:", " ", count/size(x)[1])
-		println("RHS:", " ", (stdev(x)/(a[i] - avg(x)))^2)
+		println("RHS:", " ", (stdev(x)/a[i])^2)
 		println("------------------------")
 	end
 end
