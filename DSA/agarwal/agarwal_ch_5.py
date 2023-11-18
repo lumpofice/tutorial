@@ -302,3 +302,42 @@ print("Let's check the new size.")
 print(queue.size)
 print("")
 
+
+# Stack based queue
+# -----------------------------
+# -----------------------------
+# -----------------------------
+class Queue:
+    def __init__(self):
+        self.stack_1 = []
+        self.stack_2 = []
+
+    def enqueue(self, data):
+        self.stack_1.append(data)
+
+    def dequeue(self):
+        if not self.stack_2:
+            while self.stack_1:
+                self.stack_2.append(self.stack_1.pop())
+        if not self.stack_2:
+            return "stack_2 is empty"
+        return self.stack_2.pop()
+
+print("We add some elements to the stack based queue.")
+queue = Queue()
+queue.enqueue("staple")
+queue.enqueue("clip")
+queue.enqueue("paper")
+print("")
+
+print("Let's look at stack_1")
+print(queue.stack_1)
+print("")
+
+print("Let's pop off some of the elements.")
+print("We pop the element {}".format(queue.dequeue()))
+print("Now, stack_1 is: {}".format(queue.stack_1))
+print("and stack_2 is: {}".format(queue.stack_2))
+print("Next, we pop off the element {}".format(queue.dequeue()))
+print("giving us stack_1: {}".format(queue.stack_1))
+print("and stack_2: {}".format(queue.stack_2))
