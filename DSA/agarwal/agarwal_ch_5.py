@@ -307,6 +307,14 @@ print("")
 # -----------------------------
 # -----------------------------
 # -----------------------------
+print("Recall that we want to remove elements from the")
+print("front of the list. So, we invert stack_1, which becomes")
+print("stack_2, from which we remove the 'tail' element.")
+print("")
+
+print("This is the stack-based queue that has an expensive dequeue method.")
+print("")
+
 class Queue:
     def __init__(self):
         self.stack_1 = []
