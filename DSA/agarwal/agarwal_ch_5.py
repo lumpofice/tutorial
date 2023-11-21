@@ -349,3 +349,66 @@ print("and stack_2 is: {}".format(queue.stack_2))
 print("Next, we pop off the element {}".format(queue.dequeue()))
 print("giving us stack_1: {}".format(queue.stack_1))
 print("and stack_2: {}".format(queue.stack_2))
+print("")
+
+print("And this is the version of the stack-based queue with the")
+print("expensive enqueue method.")
+class Queue2:
+    def __init__(self):
+        self.stack_one = []
+        self.stack_two = []
+        self.count = 0
+
+    def enqueue2(self, data):
+        if not self.stack_one:
+            self.stack_one.append(data)
+            self.count += 1
+        else:
+            while self.count > 0:
+                self.stack_two.append(self.stack_one.pop())
+                self.count -= 1
+            self.stack_two.append(data)
+            while self.stack_two:
+                self.stack_one.append(self.stack_two.pop())
+                self.count += 1
+            
+
+    def dequeue2(self):
+        if self.stack_one:
+            self.stack_one.pop()
+            self.count -= 1
+        else:
+            return "queue is empty"
+
+print("")
+print("Here is the stack-based queue with the expensive enqueue.")
+print("We check that the queue is empty.")
+q = Queue2()
+print(q.dequeue2())
+
+print("")
+print("We add elements to the queue.")
+q.enqueue2("element1")
+q.enqueue2("element2")
+print("Now, we check our stack of elements.")
+print(q.stack_one)
+print("And we have how many elements?")
+print(q.count)
+print("")
+
+print("Let's add one more element, element3; then let's")
+print("remove two elements and make sure the only element")
+print("remaining is the first element added.")
+
+print("")
+q.enqueue2("element3")
+print("Here is the stack with the new element, element3.")
+print(q.stack_one)
+print("And here is the stack after two elements have been removed.")
+q.dequeue2()
+q.dequeue2()
+print(q.stack_one)
+
+print("")
+print("And what is the count?")
+print(q.count)
