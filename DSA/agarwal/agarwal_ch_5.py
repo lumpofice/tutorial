@@ -412,3 +412,61 @@ print(q.stack_one)
 print("")
 print("And what is the count?")
 print(q.count)
+
+
+# ------------------------------------------
+# ------------------------------------------
+# ------------------------------------------
+# Agarwal Chapter 5 Exercise 2
+# ------------------------------------------
+# ------------------------------------------
+# ------------------------------------------
+class Exercise2Node:
+    def __init__(self, data):
+        self.data = data
+        self.nex = None
+class Exercise2SinglyLinkedStack:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    def append(self, data):
+        node = Exercise2Node(data)
+        if self.tail is None:
+            self.head = node
+            self.tail = node
+            return
+        node.nex = self.head
+        self.head = node
+    def delete(self):
+        current = self.head
+        while current.nex:
+            if current.nex == self.tail:
+                self.tail = current
+                current.nex = None
+                return
+            current = current.nex
+        self.head = None
+        return
+    def iter(self):
+        current = self.head
+        if current is None:
+            print("List empty")
+            return
+        print(current.data)
+        while current.nex:
+            current = current.nex
+            print(current.data)
+print("---------------------------------")
+print("Let's work with SinglyLinkedStack")
+print("Let's add items and look at the list.")
+number2 = Exercise2SinglyLinkedStack()
+number2.append("one")
+number2.append("two")
+number2.append("three")
+number2.append("four")
+number2.iter()
+print("This is the head {}".format(number2.head.data))
+print("This is the tail {}".format(number2.tail.data))
+print("Let's delete an item and look at the list.")
+number2.delete()
+number2.iter()
