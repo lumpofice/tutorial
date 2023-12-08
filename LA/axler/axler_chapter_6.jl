@@ -2,46 +2,62 @@
 using LinearAlgebra
 using VMLS
 
-x = [1, 2, 3, -4]
-y = [-5, 4, 3, 2]
+x_1 = [1, 0, 0, 0]
+x_2 = [0, 1, 0, 0]
+x_3 = [0, 0, 1, 0]
+x_4 = [0, 0, 0, 1]
 
-# So, orthonormal basis will have size OB = 2
-OB = 2
+basis = Vector{Int}[]
 
-# Orthonormal Basis: set_e
-set_e = Set([])
+push!(basis, x_1)
+push!(basis, x_2)
+push!(basis, x_3)
+push!(basis, x_4)
 
-println("x:")
-println(x)
+println("Here is our basis:")
+println(basis)
+println("")
 
-println("y:")
-println(y)
+# So, orthonormal basis will have size dimension = 2
+dimension = 4
+
+# Orthonormal Basis: ortho_basis
+ortho_basis = Set([])
 
 e = zeros(0)
-append!(e, (1/norm(x)).*x)
-push!(set_e, e)
+append!(e, (1/norm(x_1)).*x_1)
+push!(ortho_basis, e)
 
-println("set_e after element 1 added:")
-println(set_e)
+println("ortho_basis after element 1 added:")
+println(ortho_basis)
+println("")
 
-for k = 1:(OB - 1)
-	global y
-	global set_e
+for k = 2:dimension
+	global basis
+	global ortho_basis
 	new_element_terms = Set([])	
-	for j = 1:k
+	for j = 1:k-1
 		term_dot = 0
-		for i = 1:size(x, 1)
-			term_dot += y[i]*collect(set_e)[j][i]
+		for i = 1:size(x_1, 1)
+			term_dot += 
+			collect(basis)[k][i]*collect(ortho_basis)[j][i]
 		end
-		push!(new_element_terms, term_dot.*collect(set_e)[j])
+		push!(new_element_terms, term_dot.*collect(ortho_basis)[j])
 	end
-	summing_non_y_terms = zeros(size(y, 1))
+	summing_scaled_terms = zeros(size(x_1, 1))
 	for n = 1:length(new_element_terms)
-		summing_non_y_terms -= collect(new_element_terms)[n]
+		summing_scaled_terms -= collect(new_element_terms)[n]
 	end
-	new_element = y + summing_non_y_terms
-	push!(set_e, (1/norm(new_element))*new_element)
-	println("set_e after element 2 added:")
-	println(set_e)
+	new_element_before_scaling = collect(basis)[k] + summing_scaled_terms
+	push!(ortho_basis, 
+	       (1/norm(new_element_before_scaling)).*new_element_before_scaling)
+	println("ortho_basis after new_element added:")
+	println(ortho_basis)
+	println("")
 end
+
+println("Turning Set to Array:")
+ortho_basis_array = [i for i in ortho_basis]
+typeof(ortho_basis_array)
+println(ortho_basis_array)
 
