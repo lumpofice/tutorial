@@ -171,3 +171,86 @@ def post_order_traverse(node):
 post_order_traverse(n0_post)
 
 print("")
+
+# Binary tree level-order
+# We first recall the list-based queue
+class ListQueue:
+    def __init__(self):
+        self.items = []
+        self.front = 0
+        self.rear = 0
+        self.size = 4
+
+    def enqueue(self, data):
+        if self.size == self.rear:
+            print("queue full")
+        else:
+            self.items.append(data)
+            self.rear += 1
+
+    def dequeue(self):
+        if self.front == self.rear:
+            print("queue is empty")
+        else:
+            data = self.items.pop(0)
+            self.rear -= 1
+            return data
+print("We revisit the list-based queue.")
+print("This is the expected order of appearance:")
+the_queue = ListQueue()
+the_queue.enqueue("root")
+print("The root node: {}".format(the_queue.dequeue()))
+the_queue.enqueue("left")
+the_queue.enqueue("right")
+print("The left child of root: {}".format(the_queue.dequeue()))
+the_queue.enqueue("left_0")
+the_queue.enqueue("left_1")
+print("The right child of root: {}".format(the_queue.dequeue()))
+the_queue.enqueue("right_0")
+the_queue.enqueue("right_1")
+print("The left child of left: {}".format(the_queue.dequeue()))
+print("The right child of left: {}".format(the_queue.dequeue()))
+print("The left child of right: {}".format(the_queue.dequeue()))
+print("The right child of right: {}".format(the_queue.dequeue()))
+print("")
+print("Let's try this out:")
+
+class Node_level:
+    def __init__(self, data):
+        self.data = data
+        self.left_child = None
+        self.right_child = None
+
+# Here is the level-order traverse link
+n1_level = Node_level("root")
+
+n2_level = Node_level("left")
+n1_level.left_child = n2_level
+
+n3_level = Node_level("right")
+n1_level.right_child = n3_level
+
+n4_level = Node_level("left_0")
+n2_level.left_child = n4_level
+
+n5_level = Node_level("left_1")
+n2_level.right_child = n5_level
+
+n6_level = Node_level("right_0")
+n3_level.left_child = n6_level
+
+n7_level = Node_level("right_1")
+n3_level.right_child = n7_level
+
+def level_order_traverse(root):
+    nodes_popped = []
+    nodes_in_queue = [root]
+    while len(nodes_in_queue) > 0:
+        node = nodes_in_queue.pop(0)
+        nodes_popped.append(node.data)
+        if node.left_child:
+            nodes_in_queue.append(node.left_child)
+        if node.right_child:
+            nodes_in_queue.append(node.right_child)
+    return nodes_popped
+print(level_order_traverse(n1_level))
