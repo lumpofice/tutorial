@@ -40,33 +40,33 @@ while current:
 print("")
 
 # Binary tree pre-order traverse
-class Node_pre_order:
+class NodePreOrder:
     def __init__(self, data):
         self.data = data
         self.left_child = None
         self.right_child = None
 
-n0_pre = Node_pre_order("root")
+n0_pre = NodePreOrder("root")
 
-n1_pre = Node_pre_order("left")
+n1_pre = NodePreOrder("left")
 n0_pre.left_child = n1_pre
 
-n2_pre = Node_pre_order("right")
+n2_pre = NodePreOrder("right")
 n0_pre.right_child = n2_pre
 
-n3_pre = Node_pre_order("left_0")
+n3_pre = NodePreOrder("left_0")
 n1_pre.left_child = n3_pre
 
-n4_pre = Node_pre_order("left_1")
+n4_pre = NodePreOrder("left_1")
 n1_pre.right_child = n4_pre
 
-n5_pre = Node_pre_order("right_0")
+n5_pre = NodePreOrder("right_0")
 n2_pre.left_child = n5_pre
 
-n6_pre = Node_pre_order("right_1")
+n6_pre = NodePreOrder("right_1")
 n2_pre.right_child = n6_pre
 
-n7_pre = Node_pre_order("left_0_1")
+n7_pre = NodePreOrder("left_0_1")
 n3_pre.right_child = n7_pre
 
 print("Printing pre-order nodes:")
@@ -83,33 +83,33 @@ pre_order_traverse(n0_pre)
 print("")
 
 # Binary tree in-order traverse
-class Node_in_order:
+class NodeInOrder:
     def __init__(self, data):
         self.data = data
         self.left_child = None
         self.right_child = None
 
-n0_in = Node_in_order("root")
+n0_in = NodeInOrder("root")
 
-n1_in = Node_in_order("left")
+n1_in = NodeInOrder("left")
 n0_in.left_child = n1_in
 
-n2_in = Node_in_order("right")
+n2_in = NodeInOrder("right")
 n0_in.right_child = n2_in
 
-n3_in = Node_in_order("left_0")
+n3_in = NodeInOrder("left_0")
 n1_in.left_child = n3_in
 
-n4_in = Node_in_order("left_1")
+n4_in = NodeInOrder("left_1")
 n1_in.right_child = n4_in
 
-n5_in = Node_in_order("right_0")
+n5_in = NodeInOrder("right_0")
 n2_in.left_child = n5_in
 
-n6_in = Node_in_order("right_0_0")
+n6_in = NodeInOrder("right_0_0")
 n5_in.left_child = n6_in
 
-n7_in = Node_in_order("right_0_1")
+n7_in = NodeInOrder("right_0_1")
 n5_in.right_child = n7_in
 
 print("Printing in-order nodes:")
@@ -127,36 +127,36 @@ print("")
 
 
 # Binary tree post-order
-class Node_post_order:
+class NodePostOrder:
     def __init__(self, data):
         self.data = data
         self.left_child = None
         self.right_child = None
 
-n0_post = Node_post_order("root")
+n0_post = NodePostOrder("root")
 
-n1_post = Node_post_order("left")
+n1_post = NodePostOrder("left")
 n0_post.left_child = n1_post
 
-n2_post = Node_post_order("right")
+n2_post = NodePostOrder("right")
 n0_post.right_child = n2_post
 
-n3_post = Node_post_order("left_0")
+n3_post = NodePostOrder("left_0")
 n1_post.left_child = n3_post
 
-n4_post = Node_post_order("left_1")
+n4_post = NodePostOrder("left_1")
 n1_post.right_child = n4_post
 
-n5_post = Node_post_order("left_1_0")
+n5_post = NodePostOrder("left_1_0")
 n4_post.left_child = n5_post
 
-n6_post = Node_post_order("left_1_1")
+n6_post = NodePostOrder("left_1_1")
 n4_post.right_child = n6_post
 
-n7_post = Node_post_order("right_0")
+n7_post = NodePostOrder("right_0")
 n2_post.left_child = n7_post
 
-n8_post = Node_post_order("right_1")
+n8_post = NodePostOrder("right_1")
 n2_post.right_child = n8_post
 
 print("Printint post-order nodes:")
@@ -215,31 +215,31 @@ print("The right child of right: {}".format(the_queue.dequeue()))
 print("")
 print("Let's try this out:")
 
-class Node_level:
+class NodeLevel:
     def __init__(self, data):
         self.data = data
         self.left_child = None
         self.right_child = None
 
 # Here is the level-order traverse link
-n1_level = Node_level("root")
+n1_level = NodeLevel("root")
 
-n2_level = Node_level("left")
+n2_level = NodeLevel("left")
 n1_level.left_child = n2_level
 
-n3_level = Node_level("right")
+n3_level = NodeLevel("right")
 n1_level.right_child = n3_level
 
-n4_level = Node_level("left_0")
+n4_level = NodeLevel("left_0")
 n2_level.left_child = n4_level
 
-n5_level = Node_level("left_1")
+n5_level = NodeLevel("left_1")
 n2_level.right_child = n5_level
 
-n6_level = Node_level("right_0")
+n6_level = NodeLevel("right_0")
 n3_level.left_child = n6_level
 
-n7_level = Node_level("right_1")
+n7_level = NodeLevel("right_1")
 n3_level.right_child = n7_level
 
 def level_order_traverse(root):
@@ -254,3 +254,50 @@ def level_order_traverse(root):
             nodes_in_queue.append(node.right_child)
     return nodes_popped
 print(level_order_traverse(n1_level))
+print("")
+
+# Expression tree
+print("Here is the Expression Tree result")
+class TreeNodeExpression:
+    def __init__(self, data=None):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class StackExpression:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        self.items.append(item)
+
+    def dequeue(self):
+        popped_item = self.items.pop()
+        return popped_item
+
+stack = StackExpression()
+
+expression = "3 5 + 4 5 - *".split()
+for term in expression:
+    if term in "+-*/":
+        node = TreeNodeExpression(term)
+        node.right = stack.dequeue()
+        node.left = stack.dequeue()
+    else:
+        node = TreeNodeExpression(int(term))
+    stack.enqueue(node)
+
+def calculate(node_item):
+    if node_item.data == "+":
+        return calculate(node_item.left) + calculate(node_item.right)
+    elif node_item.data == "-":
+        return calculate(node_item.left) - calculate(node_item.right)
+    elif node_item.data == "*":
+        return calculate(node_item.left) * calculate(node_item.right)
+    elif node_item.data == "/":
+        return calculate(node_item.left) / calculate(node_item.right)
+    else:
+        return node_item.data
+
+print(calculate(stack.dequeue()))
+print("")
