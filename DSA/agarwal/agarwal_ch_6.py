@@ -301,3 +301,66 @@ def calculate(node_item):
 
 print(calculate(stack.dequeue()))
 print("")
+
+# Binary Search Tree
+
+print("Here is out Binary Search Tree")
+
+class NodeSearchTree:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+class SearchTree:
+    def __init__(self):
+        self.root = None
+    def onboarding(self, data):
+        node = NodeSearchTree(data)
+        if self.root is None:
+            self.root = node
+            return self.root
+        else:
+            current = self.root
+            parent = None
+            while current:
+                parent = current
+                if node.data < parent.data:
+                    current = current.left
+                    if current is None:
+                        parent.left = node
+                        return 
+                else:
+                    current = current.right
+                    if current is None:
+                        parent.right = none
+                        return
+
+n0_search_tree = NodeSearchTree("root")
+
+n1_search_tree = NodeSearchTree("left")
+n0_search_tree.left = n1_search_tree
+
+n2_search_tree = NodeSearchTree("right")
+n0_search_tree.right = n2_search_tree
+
+n3_search_tree = NodeSearchTree("left_0")
+n1_search_tree.left = n3_search_tree
+
+n4_search_tree = NodeSearchTree("left_0_0")
+n3_search_tree.left = n4_search_tree
+
+n5_search_tree = NodeSearchTree("left_0_1")
+n3_search_tree.right = n5_search_tree
+
+def in_order_traverse_search_tree(node):
+    if node is None:
+        return
+    if node.left:
+        in_order_traverse_search_tree(node.left)
+    print(node.data)
+    if node.right:
+        in_order_traverse_search_tree(node.right)
+
+in_order_traverse_search_tree(n0_search_tree)
+print("")
