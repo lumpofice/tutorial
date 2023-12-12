@@ -336,21 +336,21 @@ class SearchTree:
                         parent.right = none
                         return
 
-n0_search_tree = NodeSearchTree("root")
+n0_search_tree = NodeSearchTree(5)
 
-n1_search_tree = NodeSearchTree("left")
+n1_search_tree = NodeSearchTree(4)
 n0_search_tree.left = n1_search_tree
 
-n2_search_tree = NodeSearchTree("right")
+n2_search_tree = NodeSearchTree(6)
 n0_search_tree.right = n2_search_tree
 
-n3_search_tree = NodeSearchTree("left_0")
+n3_search_tree = NodeSearchTree(2)
 n1_search_tree.left = n3_search_tree
 
-n4_search_tree = NodeSearchTree("left_0_0")
+n4_search_tree = NodeSearchTree(1)
 n3_search_tree.left = n4_search_tree
 
-n5_search_tree = NodeSearchTree("left_0_1")
+n5_search_tree = NodeSearchTree(3)
 n3_search_tree.right = n5_search_tree
 
 def in_order_traverse_search_tree(node):
@@ -363,4 +363,24 @@ def in_order_traverse_search_tree(node):
         in_order_traverse_search_tree(node.right)
 
 in_order_traverse_search_tree(n0_search_tree)
+print("")
+
+def search(start, node):
+    root = start
+    current = node
+    if current.data < root.data:
+        root = root.left
+        search(root, current)
+    elif current.data > root.data:
+        root = root.right
+        search(root, current)
+    else:
+        print(current.data)
+
+print("This is what we expect from the search function:")
+print(n4_search_tree.data)
+print("")
+
+print("This is what we get from the search function:")
+search(n0_search_tree, n4_search_tree)
 print("")
