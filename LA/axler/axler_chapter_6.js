@@ -1,4 +1,4 @@
-// Orthonormal Basis of two dimensions
+// Orthonormal Basis of four dimensions
 
 var x_1 = [1, 0, 0, 0];
 var x_2 = [0, 1, 0, 0];

@@ -1,4 +1,4 @@
-# Orthonormal Basis of two dimensions
+# Orthonormal Basis of four dimensions
 using LinearAlgebra
 using VMLS
 

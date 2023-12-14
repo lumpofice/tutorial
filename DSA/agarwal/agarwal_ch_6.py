@@ -384,3 +384,24 @@ print("")
 print("This is what we get from the search function:")
 search(n0_search_tree, n4_search_tree)
 print("")
+
+def delete(root, node):
+    if node.left is None and node.right is None:
+        parent = root
+        while True:
+            if parent.left == node:
+                parent.left = None
+                return
+            if parent.right == node:
+                parent.right = None
+                return
+            if parent.data > node.data:
+                parent = parent.left
+            else:
+                parent = parent.right
+
+print("We delete one of the leaves.")
+delete(n0_search_tree, n4_search_tree)
+print("Then we traverse the tree to show that the leaf was deleted.")
+in_order_traverse_search_tree(n0_search_tree)
+print("")
