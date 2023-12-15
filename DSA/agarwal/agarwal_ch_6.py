@@ -336,22 +336,25 @@ class SearchTree:
                         parent.right = none
                         return
 
-n0_search_tree = NodeSearchTree(5)
+n0_search_tree = NodeSearchTree(6)
 
-n1_search_tree = NodeSearchTree(4)
+n1_search_tree = NodeSearchTree(5)
 n0_search_tree.left = n1_search_tree
 
-n2_search_tree = NodeSearchTree(6)
+n2_search_tree = NodeSearchTree(8)
 n0_search_tree.right = n2_search_tree
 
-n3_search_tree = NodeSearchTree(2)
+n3_search_tree = NodeSearchTree(3)
 n1_search_tree.left = n3_search_tree
 
-n4_search_tree = NodeSearchTree(1)
+n4_search_tree = NodeSearchTree(2)
 n3_search_tree.left = n4_search_tree
 
-n5_search_tree = NodeSearchTree(3)
+n5_search_tree = NodeSearchTree(4)
 n3_search_tree.right = n5_search_tree
+
+n6_search_tree = NodeSearchTree(7)
+n2_search_tree.left = n6_search_tree
 
 def in_order_traverse_search_tree(node):
     if node is None:
@@ -399,9 +402,35 @@ def delete(root, node):
                 parent = parent.left
             else:
                 parent = parent.right
+    if node.left and node.right is None:
+        parent = root
+        while True:
+            if parent.left == node:
+                parent.left = node.left
+                return
+            if parent.right == node:
+                parent.right = node.left
+                return
+            if parent.data > node.data:
+                parent = parent.left
+            else:
+                parent = parent.right
+    if node.right and node.left is None:
+        parent = root
+        while True:
+            if parent.right == node:
+                parent.right = node.right
+                return
+            if parent.left == node:
+                parent.left = node.right
+                return
+            if parent.data > node.data:
+                parent = parent.left
+            else:
+                parent = parent.right
 
 print("We delete one of the leaves.")
-delete(n0_search_tree, n4_search_tree)
+delete(n0_search_tree, n6_search_tree)
 print("Then we traverse the tree to show that the leaf was deleted.")
 in_order_traverse_search_tree(n0_search_tree)
 print("")
