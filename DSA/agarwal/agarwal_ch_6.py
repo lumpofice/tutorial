@@ -302,135 +302,187 @@ def calculate(node_item):
 print(calculate(stack.dequeue()))
 print("")
 
+
 # Binary Search Tree
+print("-----------------")
+print("Here, we work with a binary search tree")
+print("")
 
-print("Here is out Binary Search Tree")
-
-class NodeSearchTree:
+class Node:
     def __init__(self, data):
         self.data = data
-        self.left = None
-        self.right = None
+        self.right_child = None
+        self.left_child = None
 
-class SearchTree:
+class Tree:
     def __init__(self):
-        self.root = None
-    def onboarding(self, data):
-        node = NodeSearchTree(data)
-        if self.root is None:
-            self.root = node
-            return self.root
+        self.root_node = None
+
+    def insert(self, data):
+        node = Node(data)
+        if self.root_node is None:
+            self.root_node = node
+            return self.root_node
         else:
-            current = self.root
+            current = self.root_node
             parent = None
-            while current:
+            while True:
                 parent = current
                 if node.data < parent.data:
-                    current = current.left
+                    current = current.left_child
                     if current is None:
-                        parent.left = node
-                        return 
+                        parent.left_child = node
+                        return parent.left_child 
                 else:
-                    current = current.right
+                    current = current.right_child
                     if current is None:
-                        parent.right = none
-                        return
+                        parent.right_child = node
+                        return parent.right_child
 
-n0_search_tree = NodeSearchTree(6)
+    def inorder(self, root_node): 
+        current = root_node 
+        if current is None: 
+            return 
+        self.inorder(current.left_child) 
+        print(current.data) 
+        self.inorder(current.right_child)
+        
+                    
+    def get_node_with_parent(self, data): 
+        parent = None 
+        current = self.root_node 
+        if current is None: 
+            return (parent, None) 
+        while True: 
+            if current.data == data: 
+                return (parent, current) 
+            elif current.data > data: 
+                parent = current 
+                current = current.left_child 
+            else: 
+                parent = current 
+                current = current.right_child 
+        return (parent, current) 
+   
 
-n1_search_tree = NodeSearchTree(5)
-n0_search_tree.left = n1_search_tree
-
-n2_search_tree = NodeSearchTree(8)
-n0_search_tree.right = n2_search_tree
-
-n3_search_tree = NodeSearchTree(3)
-n1_search_tree.left = n3_search_tree
-
-n4_search_tree = NodeSearchTree(2)
-n3_search_tree.left = n4_search_tree
-
-n5_search_tree = NodeSearchTree(4)
-n3_search_tree.right = n5_search_tree
-
-n6_search_tree = NodeSearchTree(7)
-n2_search_tree.left = n6_search_tree
-
-def in_order_traverse_search_tree(node):
-    if node is None:
-        return
-    if node.left:
-        in_order_traverse_search_tree(node.left)
-    print(node.data)
-    if node.right:
-        in_order_traverse_search_tree(node.right)
-
-in_order_traverse_search_tree(n0_search_tree)
-print("")
-
-def search(start, node):
-    root = start
-    current = node
-    if current.data < root.data:
-        root = root.left
-        search(root, current)
-    elif current.data > root.data:
-        root = root.right
-        search(root, current)
-    else:
-        print(current.data)
-
-print("This is what we expect from the search function:")
-print(n4_search_tree.data)
-print("")
-
-print("This is what we get from the search function:")
-search(n0_search_tree, n4_search_tree)
-print("")
-
-def delete(root, node):
-    if node.left is None and node.right is None:
-        parent = root
+    def remove(self, data):  
+        parent, node = self.get_node_with_parent(data)  
+ 
+        if parent is None and node is None:  
+            return False  
+ 
+        # Get children count  
+        children_count = 0  
+ 
+        if node.left_child and node.right_child:  
+            children_count = 2  
+        elif (node.left_child is None) and (node.right_child is None):  
+            children_count = 0  
+        else:  
+            children_count = 1  
+        
+        if children_count == 0:  
+            if parent:  
+                if parent.right_child is node:  
+                    parent.right_child = None  
+                else:  
+                    parent.left_child = None  
+            else:  
+                self.root_node = None 
+        elif children_count == 1:  
+            next_node = None  
+            if node.left_child:  
+                next_node = node.left_child  
+            else:  
+                next_node = node.right_child  
+ 
+            if parent:  
+                if parent.left_child is node:  
+                    parent.left_child = next_node  
+                else:  
+                    parent.right_child = next_node  
+            else:  
+                self.root_node = next_node  
+        else:  
+            parent_of_leftmost_node = node 
+            leftmost_node = node.right_child 
+            while leftmost_node.left_child:  
+                parent_of_leftmost_node = leftmost_node 
+                leftmost_node = leftmost_node.left_child
+            node.data = leftmost_node.data
+    
+            if parent_of_leftmost_node.left_child == leftmost_node:  
+                parent_of_leftmost_node.left_child = leftmost_node.right_child  
+            else:  
+                parent_of_leftmost_node.right_child = leftmost_node.right_child 
+            
+            
+    
+    def search(self, data):
+        current = self.root_node
         while True:
-            if parent.left == node:
-                parent.left = None
-                return
-            if parent.right == node:
-                parent.right = None
-                return
-            if parent.data > node.data:
-                parent = parent.left
+            if current is None:
+                return None
+            elif current.data is data:
+                return data
+            elif current.data > data:
+                current = current.left_child
             else:
-                parent = parent.right
-    if node.left and node.right is None:
-        parent = root
-        while True:
-            if parent.left == node:
-                parent.left = node.left
-                return
-            if parent.right == node:
-                parent.right = node.left
-                return
-            if parent.data > node.data:
-                parent = parent.left
-            else:
-                parent = parent.right
-    if node.right and node.left is None:
-        parent = root
-        while True:
-            if parent.right == node:
-                parent.right = node.right
-                return
-            if parent.left == node:
-                parent.left = node.right
-                return
-            if parent.data > node.data:
-                parent = parent.left
-            else:
-                parent = parent.right
+                current = current.right_child
 
-print("We delete one of the leaves.")
-delete(n0_search_tree, n6_search_tree)
-print("Then we traverse the tree to show that the leaf was deleted.")
-in_order_traverse_search_tree(n0_search_tree)
+                
+tree = Tree()
+n0 = tree.insert(5)
+print("node")
+print(n0.data)
+n1 = tree.insert(2)
+print("left child")
+print(n0.left_child.data)
+n2 = tree.insert(7)
+print("right child")
+print(n0.right_child.data)
+n3 = tree.insert(10)
+print("right child 1")
+print(n2.right_child.data)
+n4 = tree.insert(1)
+print("left child 0")
+print(n1.left_child.data)
+n5 = tree.insert(6)
+print("right child 0")
+print(n2.left_child.data)
+n6 = tree.insert(8)
+print("right child 1 0")
+print(n3.left_child.data)
+n7 = tree.insert(11)
+print("right child 1 1")
+print(n3.right_child.data)
+n8 = tree.insert(9)
+print("right child 1 0 1")
+print(n6.right_child.data)
+
 print("")
+print("Here is the tree, from left-most node to right-most node")
+tree.inorder(n0)
+
+print("")
+print("let's search for {}".format(n2.data))
+tree.search(7)      
+
+print("")
+print("let's traverse the tree with root node {}".format(n3.data))
+tree.inorder(n3)
+
+print("")
+print("let's remove {}".format(n2.data))
+tree.remove(7)
+print("okay, now let's search for it again")
+tree.search(7)
+
+print("")
+print("let's traverse the tree once more")
+tree.inorder(n0)
+
+print("")
+print("let's traverse the tree with root node {} once more".format(n3.data))
+tree.inorder(n3)
+
