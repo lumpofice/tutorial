@@ -55,7 +55,8 @@ for (var k = 2; k < dimension+1; k++) {
 		map(function (x, i) {return 0;});
 	for (var m = 0; m < new_element_terms.size; m++) {
 		summing_scaled_terms = 
-			summing_scaled_terms.map((x, index) => x - Array.from(new_element_terms)[m][index]);	
+			summing_scaled_terms.map((x, index) => 
+				x - Array.from(new_element_terms)[m][index]);	
 	}
 	// This is the y - <e1, y>e1 - ... - <em, y>em numerator in the
 	// Gram-Schmidt Process
@@ -83,3 +84,97 @@ for (var k = 2; k < dimension+1; k++) {
 console.log("Turning Set to Array:");
 var ortho_basis_array = Array.from(ortho_basis);
 console.log(ortho_basis_array);
+
+
+// Converting basis for subspace U to orthonormal basis, then using that
+// orthonormal basis to find the minimum distance between a vector v
+// and the subspace of U
+
+console.log("-----------------------");
+console.log("-----------------------");
+console.log("-----------------------");
+console.log("-----------------------");
+console.log("-----------------------");
+
+var u_1 = [1, 1, 0, 0];
+var u_2 = [1, 1, 1, 2];
+
+var basis_U = [];
+basis_U.push(u_1);
+basis_U.push(u_2);
+
+const dimension_U = 2;
+
+var ortho_basis_U = new Set([]);
+
+var e_1 = [];
+
+var the_sum_e_1 = 0;
+for (var i = 0; i < u_1.length; i++) {
+	the_sum_e_1 += (u_1[i])**2;
+}
+var norm_u_1 = Math.sqrt(the_sum_e_1);
+for (var i = 0; i < u_1.length; i++) {
+	var scaled_u_1_coordinate = (1/norm_u_1)*u_1[i];
+	e_1.push(scaled_u_1_coordinate);
+}
+
+ortho_basis_U.add(e_1);
+
+console.log("Here is ortho_basis_U containing e_1:");
+console.log(ortho_basis_U);
+console.log("");
+
+for (var k = 2; k < dimension_U + 1; k++) {
+	var e = [];
+	var new_element_terms = new Set([]);
+	for (j = 0; j <= k-2; j++) {
+		// Building each <e, y>e in this loop
+		var term = [];
+		var term_dot = 0;
+		for (i = 0; i < u_1.length; i++) {
+			term_dot += 
+				basis_U[k-1][i]*
+				Array.from(ortho_basis_U)[j][i];
+		}
+		for (var n = 0; n < u_1.length; n++) {
+			var scaled_term_coordinate = 
+				(term_dot)*Array.from(ortho_basis_U)[j][n];
+			term.push(scaled_term_coordinate);
+		}
+		new_element_terms.add(term);
+	}
+	// Summing each <e, y>e term within new_element_terms
+	var summing_scaled_terms = Array.apply(null, Array(4)).
+		map(function (x, i) {return 0;});
+	for (var m = 0; m < new_element_terms.size; m++) {
+		summing_scaled_terms = 
+			summing_scaled_terms.map((x, index) => 
+				x - Array.from(new_element_terms)[m][index]);	
+	}
+	// This is the y - <e1, y>e1 - ... - <em, y>em numerator in the
+	// Gram-Schmidt Process
+	var new_element_before_scaling = basis_U[k-1].map(function(x, index) {
+		return x + summing_scaled_terms[index];
+	});
+	// This is the norm in the denominator of the Gram-Schmidt Process
+	var the_sum = 0;
+	for (a = 0; a < new_element_before_scaling.length; a++) {
+		the_sum += (new_element_before_scaling[a])**2;
+	}
+	var norm_new_element_before_scaling = Math.sqrt(the_sum);
+	// This loop applies the norm to each term in the 
+	// new_element_before_scaling
+	for (b = 0; b < new_element_before_scaling.length; b++) {
+		e.push((1/norm_new_element_before_scaling)*
+		new_element_before_scaling[b]);
+	}
+	ortho_basis_U.add(e);
+	console.log("ortho_basis_U after new element added:");
+	console.log(ortho_basis_U);
+	console.log("");
+}
+
+console.log("Turning Set to Array:");
+var ortho_basis_U_array = Array.from(ortho_basis_U);
+console.log(ortho_basis_U_array);
