@@ -178,3 +178,58 @@ for (var k = 2; k < dimension_U + 1; k++) {
 console.log("Turning Set to Array:");
 var ortho_basis_U_array = Array.from(ortho_basis_U);
 console.log(ortho_basis_U_array);
+
+console.log("-----------------------");
+console.log("Here, we minimize the distance between our vector v")
+console.log("and the subspace U")
+console.log("")
+
+var vector_v = [1, 2, 3, 4];
+
+// Computing the terms of vector_v, written in terms of the orthogonal basis
+// for subspace U
+var terms_projection_U = new Set([]);
+for (var k = 0; k < dimension_U; k++) {
+	// Building each <v, e>v in the following loops
+	var vector_v_term_scalar = 0;
+	var vector_v_term = [];
+	for (var i = 0; i < vector_v.length; i++) {
+		vector_v_term_scalar += 
+			vector_v[i]*Array.from(ortho_basis_U)[k][i];
+	}
+	for (var j = 0; j < vector_v.length; j++) {
+		var vector_v_scaled_term_coordinate = 
+			vector_v_term_scalar*Array.from(ortho_basis_U)[k][j];
+		vector_v_term.push(vector_v_scaled_term_coordinate);
+	}
+	terms_projection_U.add(vector_v_term);
+}
+// Summing each <v, e>v term within terms_projection_U
+var summing_scaled_vector_v_terms = Array.apply(null, Array(4)).
+	map(function (x, i) {return 0;});
+for (var n = 0; n < dimension_U; n++) {
+	console.log(Array.from(terms_projection_U)[n])
+	summing_scaled_vector_v_terms =
+		summing_scaled_vector_v_terms.map((x, index) =>
+			x + Array.from(terms_projection_U)[n][index]);
+}
+
+var projection_U = summing_scaled_vector_v_terms;
+
+console.log("Here is our projection of vector_v onto subspace U:");
+console.log(projection_U);
+
+console.log("");
+console.log("Here is the minimum distance between vector_v and subspace U:");
+var vector_v_minus_projection_U = Array.apply(null, Array(4)).
+	map(function (x, i) {
+		return Array.from(vector_v)[i] - 
+			Array.from(projection_U)[i];
+	});
+var norm_vector_v_minus_projection_U_sum = 0;
+for (var k = 0; k < vector_v.length; k++) {
+	norm_vector_v_minus_projection_U_sum += 
+		Array.from(vector_v_minus_projection_U)[k]**2;
+}
+var norm_projection_U = Math.sqrt(norm_vector_v_minus_projection_U_sum);
+console.log(norm_projection_U);
