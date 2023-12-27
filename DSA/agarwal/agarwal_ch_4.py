@@ -551,3 +551,100 @@ if (loop_start == None):
     print('List contains no loop.')
 else:
     print('List contains a loop at {}'.format(loop_start))
+
+
+# Attempting Agarwal's SinglyLinkedList again, on 12_27_23
+
+class Node1223:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+class SinglyLinkedList1223:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+    def append1223(self, data, location):
+        node = Node1223(data)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+            self.size += 1
+        elif location == 0:
+            current = self.head
+            self.head = node
+            node.next = current
+            self.size +=1
+        else:
+            current = self.head
+            previous = None
+            count = 0
+            while count < location-1:
+                count += 1
+                previous = current
+                current = current.next
+            if current.next:
+                previous = current
+                current = current.next
+                previous.next = node
+                node.next = current
+                self.size += 1
+            else:
+                current.next = node
+                self.tail = node
+                self.size += 1
+    def traverse1223(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+single = SinglyLinkedList1223()
+print("")
+print("***********SinglyLinkedList on 12_27_23**************")
+print("***********SinglyLinkedList on 12_27_23**************")
+print("")
+print("We begin appending items to the SinglyLinkedList")
+print("")
+print("List size: {}".format(single.size))
+single.append1223("head", 0)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("tail", 1)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("torso", 1)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("neck", 1)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("shoulders", 2)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("tail_hair", 5)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
+single.append1223("head_hair", 0)
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+print("")
+print("List size: {}".format(single.size))
