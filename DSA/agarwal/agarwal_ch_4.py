@@ -593,58 +593,128 @@ class SinglyLinkedList1223:
                 current.next = node
                 self.tail = node
                 self.size += 1
+    def delete1223(self, location):
+        current = self.head
+        previous = None
+        count = 0
+        while count < location:
+            previous = current
+            current = current.next
+            count += 1
+        if count == 0:
+            self.head = current.next
+            self.size -= 1
+        else:
+            if count+1 == self.size:
+                self.tail = previous
+                previous.next = None
+                self.size -= 1
+            else:    
+                previous.next = current.next
+                self.size -= 1
     def traverse1223(self):
         current = self.head
         while current:
             print(current.data)
             current = current.next
+
 single = SinglyLinkedList1223()
+
 print("")
 print("***********SinglyLinkedList on 12_27_23**************")
 print("***********SinglyLinkedList on 12_27_23**************")
 print("")
+
 print("We begin appending items to the SinglyLinkedList")
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("head", 0)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("tail", 1)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("torso", 1)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("neck", 1)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("shoulders", 2)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("tail_hair", 5)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
 single.append1223("head_hair", 0)
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
 print("")
 print("List size: {}".format(single.size))
+
+print("")
+print("Now we remove items")
+
+print("")
+print("Here is the list size, the list, and the head and tail.")
+print("List size: {}".format(single.size))
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
+print("")
+print("Deleting location 0")
+single.delete1223(0)
+
+print("")
+print("List size: {}".format(single.size))
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
+print("")
+print("Deleting location 4")
+single.delete1223(4)
+
+print("")
+print("List size: {}".format(single.size))
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
+print("")
+print("Deleting location 4")
+single.delete1223(4)
+
+print("")
+print("List size: {}".format(single.size))
+print("**********LIST:")
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
