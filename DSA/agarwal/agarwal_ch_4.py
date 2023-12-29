@@ -612,8 +612,23 @@ class SinglyLinkedList1223:
             else:    
                 previous.next = current.next
                 self.size -= 1
+    def search1223(self, data):
+        current = self.head
+        count = 0
+        while current:
+            if current.data == data:
+                return "Found {} at position {}".format(current.data, count)
+            else:
+                current = current.next
+                count += 1
+        return "That item does not exist in our SinglyLinkedList1223."
+    def clear1223(self):
+        self.head = None
+        self.tail = None
     def traverse1223(self):
         current = self.head
+        if current is None:
+            return
         while current:
             print(current.data)
             current = current.next
@@ -718,3 +733,20 @@ print("List size: {}".format(single.size))
 print("**********LIST:")
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head.data, single.tail.data))
+
+print("")
+print("Now we search for items in the SinglyLinkedList1223.")
+
+print("")
+print("We first search for an item in the list, say torso.")
+print(single.search1223("torso"))
+
+print("")
+print("Then we search for item not in the list, say 'LIST'.")
+print(single.search1223("LIST"))
+
+print("")
+print("Let's clear the list.")
+single.clear1223()
+single.traverse1223()
+print("head and tail: {} -- {}".format(single.head, single.tail))
