@@ -750,3 +750,54 @@ print("Let's clear the list.")
 single.clear1223()
 single.traverse1223()
 print("head and tail: {} -- {}".format(single.head, single.tail))
+
+
+# Attempting Agarwal's DoublyLinkedList again, on 12_30_23
+
+class NodeDoubly1223:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+class DoublyLinkedList1223:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    def append_doubly1223(self, data):
+        node = NodeDoubly1223(data)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            node.prev = self.tail
+            self.tail.next = node
+            self.tail = node
+    def traverse_doubly1223(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+double = DoublyLinkedList1223()
+
+print("")
+print("***********DoublyLinkedList on 12_30_23**************")
+print("***********DoublyLinkedList on 12_30_23**************")
+print("")
+
+print("")
+print("Let's add some elements to the list.")
+
+print("")
+double.append_doubly1223("head")
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("neck")
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("tail")
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
