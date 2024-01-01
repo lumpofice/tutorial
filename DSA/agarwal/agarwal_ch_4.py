@@ -763,19 +763,46 @@ class DoublyLinkedList1223:
     def __init__(self):
         self.head = None
         self.tail = None
-    def append_doubly1223(self, data):
+        self.size = 0
+    def append_doubly1223(self, data, location):
         node = NodeDoubly1223(data)
         if self.head is None:
             self.head = node
             self.tail = node
+            self.size += 1
         else:
-            node.prev = self.tail
+            current = self.head
+            count = 0
+            while count < location:
+                current = current.next
+                count += 1
+            if current:
+                if current.prev:
+                    current.prev.next = node
+                    node.prev = current.prev
+                    current.prev = node
+                    node.next = current
+                    self.size += 1
+                    return
+                else:
+                    self.head = node
+                    node.next = current
+                    current.prev = node
+                    self.size += 1
+                    return
             self.tail.next = node
+            node.prev = self.tail
             self.tail = node
+            self.size += 1
     def traverse_doubly1223(self):
         current = self.head
         while current:
-            print(current.data)
+            if current.prev:
+                print("***current.prev: {}".format(current.prev.data))
+            print("***current: {}".format(current.data))
+            if current.next:
+                print("***current.next: {}".format(current.next.data))
+            print("_______________")
             current = current.next
 double = DoublyLinkedList1223()
 
@@ -788,16 +815,43 @@ print("")
 print("Let's add some elements to the list.")
 
 print("")
-double.append_doubly1223("head")
+double.append_doubly1223("head", 0)
+print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
 
 print("")
-double.append_doubly1223("neck")
+double.append_doubly1223("tail", 1)
+print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
 
 print("")
-double.append_doubly1223("tail")
+double.append_doubly1223("neck", 1)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("head_hair", 0)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("tail_hair", double.size)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("torso", 3)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+double.append_doubly1223("scalp", 1)
+print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
