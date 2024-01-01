@@ -1,11 +1,18 @@
 # Converting decimal to binary
-for n = 2:.5:4
+for n = -2:0.01:2
 	num = n
 	arr = []
 	arr_frac = []
 	function g(h, t)
-		if isempty(arr)
+		if isempty(arr) && t == nothing
 			return 0
+		elseif isempty(arr) && t !== nothing
+			append!(arr, "0")
+			arr_string = join(string.(arr))
+			return arr_string*t
+		elseif t == nothing
+			arr_string = join(string.(reverse(arr)))
+			return arr_string
 		else
 			arr_string = join(string.(reverse(arr)))
 			return arr_string*t
@@ -73,6 +80,9 @@ for n = 2:.5:4
 		end
 	end
 	function t(d, arr_frac)
+		if d == 0
+			return
+		end
 		i = 1
 		while d > 0
 			while d < (2.0)^(-i)
@@ -92,7 +102,14 @@ for n = 2:.5:4
 		integer_part = floor(Int, parts[2])
 		fractional_part = parts[1]
 		if num == -1
-			println(11)
+			println("11")
+		elseif integer_part == -1
+			append!(arr, "1")
+			println(g(
+				arr,
+				t(abs(fractional_part), arr_frac)
+				)
+			)
 		else
 			println(g(
 				h(integer_part, arr), 
