@@ -1,43 +1,60 @@
 # Converting decimal to binary
-for n = -2:0.01:2
-	num = n
-	arr = []
-	arr_frac = []
-	function g(h, t)
-		if isempty(arr) && t == nothing
+for n = -22:0.25:20
+	decimal = n
+	binary_array_integer = []
+	binary_array_fraction = []
+	
+	# Here are the functions that convert decimal to binary
+	
+	# final_output function takes the array elements and strings them
+	# together with a join
+	function final_outputs(h, fractional)
+		if isempty(binary_array_integer) && fractional == nothing
 			return 0
-		elseif isempty(arr) && t !== nothing
-			append!(arr, "0")
-			arr_string = join(string.(arr))
-			return arr_string*t
-		elseif t == nothing
-			arr_string = join(string.(reverse(arr)))
+		elseif isempty(binary_array_integer) && fractional !== nothing
+			append!(binary_array_integer, "0")
+			arr_string = join(string.(binary_array_integer))
+			return arr_string*fractional
+		elseif fractional == nothing
+			arr_string = 
+				join(string.(reverse(binary_array_integer)))
 			return arr_string
 		else
-			arr_string = join(string.(reverse(arr)))
-			return arr_string*t
+			arr_string = 
+				join(string.(reverse(binary_array_integer)))
+			return arr_string*fractional
 		end
 	end
-	function f_1(x, arr)
-		if x == 0
+
+	# nonnegative constructs the integer array for nonnegative decimals
+	function nonnegative(integer_part, binary_array_integer)
+		if integer_part == 0
 			return 
 		end
-		for i = 1:x
-			if x >= 2^(i)
+		for i = 1:integer_part
+			if integer_part >= 2^(i)
 				continue
 			else
-				if isempty(arr)
+				if isempty(binary_array_integer)
 					for j = 1:i+1
-						append!(arr, 0)
+						append!(
+							binary_array_integer, 
+							0
+							)
 					end
 				end
-				f_1(x - 2^(i-1), arr)
-				arr[i] = 1
-				return arr
+				nonnegative(
+				    integer_part - 2^(i-1), 
+				    binary_array_integer
+				    )
+				binary_array_integer[i] = 1
+				return binary_array_integer
 			end
 		end
 	end
-	function f_2(x, arr)
+
+	# negative constructs the integer array for negative decimals
+	function negative(x, binary_array_integer)
 		if x == 0
 			return
 		end
@@ -45,78 +62,102 @@ for n = -2:0.01:2
 			if x >= 2^(i)
 				continue
 			else
-				if isempty(arr)
+				if isempty(binary_array_integer)
 					if x in [(2^(m) - 1) for m in 1:x]
 						for j = 1:i+2
-							append!(arr, 0)
+							append!(
+							  binary_array_integer,
+							  0
+							  )
 						end
 					else
 						for j = 1:i+1
-							append!(arr, 0)
+							append!(
+							  binary_array_integer,
+							  0
+							  )
 						end
 					end
 				end
-				f_2(x - 2^(i-1), arr)
-				arr[i] = 1
+				negative(x - 2^(i-1), binary_array_integer)
+				binary_array_integer[i] = 1
 				return
 			end
 		end
 	end
-	function j(f_2)
-		for i = 1:size(arr, 1)
-			if arr[i] == 0
-				arr[i] = 1
+
+	# rearranging_the_negative replaces 1s with 0s and 0s with 1s
+	function rearranging_the_negative(negative)
+		for i = 1:size(binary_array_integer, 1)
+			if binary_array_integer[i] == 0
+				binary_array_integer[i] = 1
 			else
-				arr[i] = 0
+				binary_array_integer[i] = 0
 			end
 		end
-		return arr
+		return binary_array_integer
 	end
-	function h(x, arr)
-		if x >= 0
-			return f_1(x, arr)
-		else x < 0
-			return j(f_2(abs(x)-1, arr))
+
+	# signature ascertains the signature of the input decimal
+	function signature(integer_part, binary_array_integer)
+		if integer_part >= 0
+			return nonnegative(integer_part, binary_array_integer)
+		else integer_part < 0
+			return rearranging_the_negative(
+				 negative(abs(integer_part)-1, 
+				      binary_array_integer)
+				 )
 		end
 	end
-	function t(d, arr_frac)
+	
+	# fractional handles the fractional part of the input decimal
+	function fractional(d, binary_array_fraction)
 		if d == 0
 			return
 		end
 		i = 1
 		while d > 0
 			while d < (2.0)^(-i)
-				append!(arr_frac, 0)
+				append!(binary_array_fraction, 0)
 				i += 1
 			end
-			append!(arr_frac, 1)
+			append!(binary_array_fraction, 1)
 			d = d - (2.0)^(-i)
 			i += 1
 		end
-		arr_frac = vcat(["."], arr_frac)
-		arr_frac_string = join(string.(arr_frac))
+		binary_array_fraction = vcat(["."], binary_array_fraction)
+		arr_frac_string = join(string.(binary_array_fraction))
 		return arr_frac_string
 	end
-	function k(num, arr)
-		parts = modf(num)
-		integer_part = floor(Int, parts[2])
-		fractional_part = parts[1]
-		if num == -1
+
+	# initial_inputs delegates where the input goes
+	function initial_inputs(decimal, binary_array_integer)
+		decimal_parts = modf(decimal)
+		integer_part = floor(Int, decimal_parts[2])
+		fractional_part = decimal_parts[1]
+		if decimal == -1
 			println("11")
 		elseif integer_part == -1
-			append!(arr, "1")
-			println(g(
-				arr,
-				t(abs(fractional_part), arr_frac)
+			append!(binary_array_integer, "1")
+			println(final_outputs(
+				binary_array_integer,
+				fractional(
+					   abs(fractional_part), 
+					   binary_array_fraction
+					   )
 				)
 			)
 		else
-			println(g(
-				h(integer_part, arr), 
-				t(abs(fractional_part), arr_frac)
+			println(final_outputs(
+				signature(integer_part, binary_array_integer), 
+				fractional(
+					   abs(fractional_part), 
+					   binary_array_fraction
+					   )
 				)
 			)
 		end
 	end
-	k(num, arr)
+
+	initial_inputs(decimal, binary_array_integer)
 end
