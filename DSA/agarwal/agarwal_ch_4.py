@@ -805,6 +805,25 @@ class DoublyLinkedList1223:
             node.prev = self.tail
             self.tail = node
             self.size += 1
+    def delete_doubly1223(self, location):
+        current = self.head
+        count = 0
+        if location == self.size:
+            self.tail = self.tail.prev
+            self.tail.next = None
+            self.size -= 1
+        else:
+            while count < location:
+                current = current.next
+                count += 1
+            if count == 0:
+                self.head = current.next
+                self.head.prev = None
+                self.size -= 1
+            else:
+                current.prev.next = current.next
+                current.next.prev = current.prev
+                self.size -= 1
     def traverse_doubly1223(self):
         current = self.head
         while current:
@@ -884,3 +903,40 @@ double.append_at_end_doubly1223("past")
 print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's delete an element from the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+print("Deleting location: {}".format(double.size))
+double.delete_doubly1223(double.size)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's delete an element from the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+print("Deleting location: 5")
+double.delete_doubly1223(5)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's delete an element from the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+print("Deleting location: 0")
+double.delete_doubly1223(0)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
