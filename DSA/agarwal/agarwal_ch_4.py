@@ -808,7 +808,11 @@ class DoublyLinkedList1223:
     def delete_doubly1223(self, location):
         current = self.head
         count = 0
-        if location == self.size:
+        if current is None:
+            print("List is empty")
+        elif location > self.size or location < 0:
+            print("List does not contain an element at this index.")
+        elif location == self.size:
             self.tail = self.tail.prev
             self.tail.next = None
             self.size -= 1
@@ -824,6 +828,10 @@ class DoublyLinkedList1223:
                 current.prev.next = current.next
                 current.next.prev = current.prev
                 self.size -= 1
+    def clear_doubly1223(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
     def traverse_doubly1223(self):
         current = self.head
         while current:
@@ -940,3 +948,44 @@ print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
 
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's delete an element from the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+print("Deleting location: -1")
+double.delete_doubly1223(-1)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's delete an element from the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+print("Deleting location: 11")
+double.delete_doubly1223(11)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head.data, double.tail.data))
+
+print("")
+print("-_-_-_-_-_-_-_-_-_-")
+print("Let's clear the list.")
+print("-_-_-_-_-_-_-_-_-_-")
+
+print("")
+double.clear_doubly1223()
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head, double.tail))
+
+print("")
+print("Finally, we attempt to delete an item from the empty list.")
+double.delete_doubly1223(3)
+print("The size: {}".format(double.size))
+double.traverse_doubly1223()
+print("Head: {} -- Tail: {}".format(double.head, double.tail))
