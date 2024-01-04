@@ -989,3 +989,80 @@ double.delete_doubly1223(3)
 print("The size: {}".format(double.size))
 double.traverse_doubly1223()
 print("Head: {} -- Tail: {}".format(double.head, double.tail))
+
+
+# Attempting Agarwal's CircularLinkedList again, on 01_04_24
+
+class NodeCircular010424: 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+class CircularLinkedList010424:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+    def append_at_the_end_circle010424(self, data):
+        node = NodeCircular010424(data)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+            self.head.prev = self.tail
+            self.tail.next = self.head
+            self.size += 1
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = node
+            node.next = self.head
+            self.head.prev = node
+            self.size += 1
+    def traverse_circle010424(self):
+        if self.head is None:
+            print("List is empty")
+            return
+        current = self.head
+        print("*******HEAD***********")
+        print("self.head: {}".format(self.head.data))
+        print("**********************")
+        count = 1
+        while count <= self.size:
+            print("")
+            print("current.prev: {}".format(current.prev.data))
+            print("current: {}".format(current.data))
+            print("current.next: {}".format(current.next.data))
+            current = current.next
+            count += 1
+        print("")
+        print("*******TAIL***********")
+        print("self.tail: {}".format(self.tail.data))
+        print("**********************")
+circle = CircularLinkedList010424()
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_head")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_neck")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_torso")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
