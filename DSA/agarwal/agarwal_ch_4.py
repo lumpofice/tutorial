@@ -1018,6 +1018,26 @@ class CircularLinkedList010424:
             node.next = self.head
             self.head.prev = node
             self.size += 1
+    def delete_circle010424(self, location):
+        if location == 0:
+            self.head = self.head.next
+            self.head.prev = self.tail
+            self.tail.next = self.head
+            self.size -= 1
+        elif location == self.size-1:
+            self.tail = self.tail.prev
+            self.tail.next = self.head
+            self.head.prev = self.tail
+            self.size -= 1
+        else:
+            current = self.head
+            count = 0
+            while count < location:
+                current = current.next
+                count += 1
+            current.prev.next = current.next
+            current.next.prev = current.prev
+            self.size -= 1
     def traverse_circle010424(self):
         if self.head is None:
             print("List is empty")
@@ -1045,6 +1065,15 @@ print("____________________________")
 print("Here is the list and its size:")
 circle.traverse_circle010424()
 print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_head_hair")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
 
 print("")
 print("____________________________")
@@ -1052,6 +1081,7 @@ print("Here is the list and its size:")
 circle.append_at_the_end_circle010424("the_head")
 circle.traverse_circle010424()
 print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
 
 print("")
 print("____________________________")
@@ -1059,6 +1089,7 @@ print("Here is the list and its size:")
 circle.append_at_the_end_circle010424("the_neck")
 circle.traverse_circle010424()
 print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
 
 print("")
 print("____________________________")
@@ -1066,3 +1097,41 @@ print("Here is the list and its size:")
 circle.append_at_the_end_circle010424("the_torso")
 circle.traverse_circle010424()
 print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_tail")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("____________________________")
+print("Here is the list and its size:")
+circle.append_at_the_end_circle010424("the_tail_hair")
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("/////////Let's delete the head///////")
+circle.delete_circle010424(0)
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("/////////Let's delete the tail///////")
+circle.delete_circle010424(4)
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
+
+print("")
+print("/////////Let's delete an element other than the head and tail///////")
+circle.delete_circle010424(2)
+circle.traverse_circle010424()
+print("The size of the list: {}".format(circle.size))
+print("||||||||||||||||||||||||||||")
