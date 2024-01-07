@@ -1038,6 +1038,12 @@ class CircularLinkedList010424:
             current.prev.next = current.next
             current.next.prev = current.prev
             self.size -= 1
+    def traverse_generator_circle010424(self):
+        current = self.head
+        while current:
+            val = current.data
+            current = current.next
+            yield val
     def traverse_circle010424(self):
         if self.head is None:
             print("List is empty")
@@ -1135,3 +1141,15 @@ circle.delete_circle010424(2)
 circle.traverse_circle010424()
 print("The size of the list: {}".format(circle.size))
 print("||||||||||||||||||||||||||||")
+
+def access_traverse_generator_circle010424():
+    count = 0
+    for node_data in circle.traverse_generator_circle010424():
+        count += 1
+        if count > circle.size:
+            break
+        print("")
+        print("*_-*_-*_-*This from the generator*-_*-_*-_*")
+        print(node_data)
+
+access_traverse_generator_circle010424()
