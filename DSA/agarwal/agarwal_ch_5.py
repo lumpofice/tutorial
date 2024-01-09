@@ -470,3 +470,38 @@ print("This is the tail {}".format(number2.tail.data))
 print("Let's delete an item and look at the list.")
 number2.delete()
 number2.iter()
+
+
+# 2nd attempt Agarwal array-based stack
+
+overflow = 3
+top = 0
+stack = [0]*overflow
+def push(data):
+    global top
+    if top < overflow:
+        stack[top] = data
+        top += 1
+    else:
+        print("stack overflow")
+
+def traverse():
+    for i in range(len(stack)):
+        print("position: {}".format(i))
+        print(stack[i])
+
+print("")
+print("")
+print("-_-_-_-_-_-_-_-_-_-_-_-_-_*_*_*_*_*_*_*_*")
+traverse()
+print("****______****")
+push("one")
+traverse()
+print("****______****")
+push("two")
+traverse()
+print("****______****")
+push("three")
+traverse()
+print("****______****")
+push("four")
