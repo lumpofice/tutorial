@@ -484,24 +484,61 @@ def push(data):
         top += 1
     else:
         print("stack overflow")
-
+def pop():
+    global top
+    if top == 0:
+        print("stack underflow")
+    elif top == overflow:
+        top -= 1
+        stack[top] = 0
+    else:
+        top -= 1
+        stack[top] = 0
 def traverse():
-    for i in range(len(stack)):
+    global top
+    for i in range(overflow):
         print("position: {}".format(i))
         print(stack[i])
 
 print("")
 print("")
+print("")
 print("-_-_-_-_-_-_-_-_-_-_-_-_-_*_*_*_*_*_*_*_*")
+print("Let us push items to the stack until we experience overflow.")
+print("Here is top: {}".format(top))
 traverse()
 print("****______****")
 push("one")
+print("Here is top: {}".format(top))
 traverse()
 print("****______****")
 push("two")
+print("Here is top: {}".format(top))
 traverse()
 print("****______****")
 push("three")
+print("Here is top: {}".format(top))
 traverse()
 print("****______****")
 push("four")
+print("////////////////////////////////////////////")
+print("Let us pop items from the stack until we experience underflow.")
+print("Here is top: {}".format(top))
+traverse()
+print("****______****")
+pop()
+print("Here is top: {}".format(top))
+traverse()
+print("****______****")
+pop()
+print("Here is top: {}".format(top))
+traverse()
+print("****______****")
+pop()
+print("Here is top: {}".format(top))
+traverse()
+print("****______****")
+pop()
+print("Here is top: {}".format(top))
+traverse()
+
