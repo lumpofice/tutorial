@@ -1,5 +1,5 @@
 # Converting decimal to binary
-for n = -22:0.25:20
+for n = -2.25:0.25:2
 	decimal = n
 	binary_array_integer = []
 	binary_array_fraction = []
@@ -88,6 +88,10 @@ for n = -22:0.25:20
 
 	# rearranging_the_negative replaces 1s with 0s and 0s with 1s
 	function rearranging_the_negative(negative)
+		if isempty(binary_array_integer)
+			append!(binary_array_integer, 1)
+			return
+		end
 		for i = 1:size(binary_array_integer, 1)
 			if binary_array_integer[i] == 0
 				binary_array_integer[i] = 1
@@ -138,11 +142,21 @@ for n = -22:0.25:20
 		if decimal == -1
 			println("11")
 		elseif integer_part == -1
-			append!(binary_array_integer, "1")
+			append!(binary_array_integer, "11")
 			println(final_outputs(
 				binary_array_integer,
 				fractional(
 					   abs(fractional_part), 
+					   binary_array_fraction
+					   )
+				)
+			)
+		elseif integer_part == 0 && fractional_part < 0
+			append!(binary_array_integer, "1")
+			println(final_outputs(
+				binary_array_integer,
+				fractional(
+					   abs(fractional_part),
 					   binary_array_fraction
 					   )
 				)
