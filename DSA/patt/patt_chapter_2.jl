@@ -88,10 +88,6 @@ for n = -2.25:0.25:2
 
 	# rearranging_the_negative replaces 1s with 0s and 0s with 1s
 	function rearranging_the_negative(negative)
-		if isempty(binary_array_integer)
-			append!(binary_array_integer, 1)
-			return
-		end
 		for i = 1:size(binary_array_integer, 1)
 			if binary_array_integer[i] == 0
 				binary_array_integer[i] = 1
