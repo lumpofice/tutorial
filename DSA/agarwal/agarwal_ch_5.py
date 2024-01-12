@@ -575,7 +575,7 @@ class SinglyLinkedListStack011124:
     def peek_stack_011124(self):
         current = self.top
         while current:
-            print(current.data)
+            print("This is in the stack: {}".format(current.data))
             current = current.next
     def push_stack_011124(self, data):
         node = NodeStack011124(data)
@@ -583,18 +583,55 @@ class SinglyLinkedListStack011124:
             self.top = node
             self.size += 1
         else:
-            self.top.next = node
+            node.next = self.top
             self.top = node
             self.size += 1
+    def pop_stack_011124(self):
+        if self.top:
+            current_top = self.top
+            self.top = self.top.next
+            current_top = None
+            self.size -= 1
 
+print("")
 single_stack = SinglyLinkedListStack011124()
-print(single_stack.size)
+print("size of the list: {}".format(single_stack.size))
+print("We add an item to the list.")
 single_stack.push_stack_011124("one")
 single_stack.peek_stack_011124()
-print(single_stack.size)
+print("")
+print("size of the list: {}".format(single_stack.size))
+print("We add an item to the list.")
 single_stack.push_stack_011124("two")
 single_stack.peek_stack_011124()
-print(single_stack.size)
+print("")
+print("size of the list: {}".format(single_stack.size))
+print("We add an item to the list.")
 single_stack.push_stack_011124("three")
 single_stack.peek_stack_011124()
-print(single_stack.size)
+print("")
+print("size of the list: {}".format(single_stack.size))
+print("")
+print("^-^-^-^")
+print("We remove an item from the list.")
+single_stack.pop_stack_011124()
+print("size of the list: {}".format(single_stack.size))
+single_stack.peek_stack_011124()
+print("")
+print("^-^-^-^")
+print("We remove an item from the list.")
+single_stack.pop_stack_011124()
+print("size of the list: {}".format(single_stack.size))
+single_stack.peek_stack_011124()
+print("")
+print("^-^-^-^")
+print("We attempt to remove an item from the list.")
+single_stack.pop_stack_011124()
+print("size of the list: {}".format(single_stack.size))
+single_stack.peek_stack_011124()
+print("")
+print("^-^-^-^")
+print("We attempt to remove an item from the list.")
+single_stack.pop_stack_011124()
+print("size of the list: {}".format(single_stack.size))
+single_stack.peek_stack_011124()
