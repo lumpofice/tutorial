@@ -561,3 +561,40 @@ traverse()
 print("We peek at the top element.")
 peek()
 print("////----****----____----****----////")
+
+# Second attempt, Agarwal's SinglyLinkedList Stack
+
+class NodeStack011124:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+class SinglyLinkedListStack011124:
+    def __init__(self):
+        self.top = None
+        self.size = 0
+    def peek_stack_011124(self):
+        current = self.top
+        while current:
+            print(current.data)
+            current = current.next
+    def push_stack_011124(self, data):
+        node = NodeStack011124(data)
+        if self.top is None:
+            self.top = node
+            self.size += 1
+        else:
+            self.top.next = node
+            self.top = node
+            self.size += 1
+
+single_stack = SinglyLinkedListStack011124()
+print(single_stack.size)
+single_stack.push_stack_011124("one")
+single_stack.peek_stack_011124()
+print(single_stack.size)
+single_stack.push_stack_011124("two")
+single_stack.peek_stack_011124()
+print(single_stack.size)
+single_stack.push_stack_011124("three")
+single_stack.peek_stack_011124()
+print(single_stack.size)
