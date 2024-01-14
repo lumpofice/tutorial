@@ -1,6 +1,6 @@
 // Converting decimal to binary
 
-for (var n = -5; n <= 2; n += 0.5) {
+for (var n = -2.5; n <= 2; n += 0.5) {
 	var decimal = n;
 	var binary_array_integer = [];
 	var binary_array_fraction = [];
@@ -20,25 +20,29 @@ for (var n = -5; n <= 2; n += 0.5) {
 			var arr_string = binary_array_integer.join("");
 			return arr_string.concat('', fractional);
 		}
+		else if (fractional === undefined) {
+			arr_string = 
+				binary_array_integer.reverse().join("");
+			return arr_string;
+		}
 		else {
 			var arr_string =
 				binary_array_integer.reverse().join("");
 			return arr_string.concat('', fractional);
 		}
-		// more code here
 	}
 
 	function nonnegative(integer_part, binary_array_integer) {
 		if (integer_part == 0) {
 			return;
 		}
-		for (var i = 0; i < integer_part; i++) {
+		for (var i = 1; i <= integer_part; i++) {
 			if (integer_part >= 2**(i)) {
 				continue;
 			}
 			else {
 				if (binary_array_integer.length == 0) {
-					for (var j = 0; j < i+1; j++) {
+					for (var j = 1; j <= i+1; j++) {
 						binary_array_integer.push(0);
 					}
 				}
@@ -46,7 +50,7 @@ for (var n = -5; n <= 2; n += 0.5) {
 					integer_part - 2**(i-1),
 					binary_array_integer
 				);
-				binary_array_integer[i] = 1;
+				binary_array_integer[i-1] = 1;
 				return binary_array_integer;
 			}
 		}
@@ -164,7 +168,7 @@ for (var n = -5; n <= 2; n += 0.5) {
 							integer_part, 
 							binary_array_integer
 						),
-						""
+						undefined
 					)
 				);
 			}
@@ -205,6 +209,15 @@ for (var n = -5; n <= 2; n += 0.5) {
 						)
 					)
 				);
+			}
+			else {
+				console.log(final_outputs(
+					signature(integer_part, 
+						binary_array_integer),
+					fractional(Math.abs(fractional_part),
+						binary_array_fraction)
+					)
+				)
 			}
 		}
 	}
