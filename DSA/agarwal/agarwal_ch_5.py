@@ -574,8 +574,9 @@ class SinglyLinkedListStack011124:
         self.size = 0
     def peek_stack_011124(self):
         current = self.top
+        print("This is in the stack:")
         while current:
-            print("This is in the stack: {}".format(current.data))
+            print(current.data)
             current = current.next
     def push_stack_011124(self, data):
         node = NodeStack011124(data)
@@ -590,8 +591,8 @@ class SinglyLinkedListStack011124:
         if self.top:
             current_top = self.top
             self.top = self.top.next
-            current_top = None
             self.size -= 1
+            return current_top.data
 
 print("")
 single_stack = SinglyLinkedListStack011124()
@@ -635,3 +636,35 @@ print("We attempt to remove an item from the list.")
 single_stack.pop_stack_011124()
 print("size of the list: {}".format(single_stack.size))
 single_stack.peek_stack_011124()
+
+print("")
+print("")
+print("")
+print("Bracket application of stacks")
+def check_brackets011124(s):
+    stack_of_brackets = SinglyLinkedListStack011124()
+    last = ''
+    for ch in s:
+        if ch in ('{', '[', '('):
+            stack_of_brackets.push_stack_011124(ch)
+        if ch in ('}', ']', ')'):
+            last = stack_of_brackets.pop_stack_011124()
+            if last == '{' and ch == '}':
+                continue
+            elif last == '[' and ch == ']':
+                continue
+            elif last == '(' and ch == ')':
+                continue
+            else:
+                return False
+    if stack_of_brackets.size > 0:
+        return False
+    else:
+        return True
+
+test_strings = (
+        "( 2**(-(x[i]-1)) - 2**(-x[i]) )",
+        )
+for s in test_strings:
+    m = check_brackets011124(s)
+    print("s: {}; verdict: {}".format(s, m))
