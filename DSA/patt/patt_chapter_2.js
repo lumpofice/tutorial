@@ -1,33 +1,35 @@
 // Converting decimal to binary
-
-for (var n = -2.5; n <= 2; n += 0.5) {
+for (var n = -2.25; n <= 2; n += 0.25) {
 	var decimal = n;
 	var binary_array_integer = [];
 	var binary_array_fraction = [];
 
 	function final_outputs(h, fractional) {
+		if (h === undefined) {
+			h = [];
+		}
 		if (
-			binary_array_integer.length == 0 && 
+			h.length == 0 && 
 			fractional === undefined 
 		) {
 			return 0;
 		}
 		else if (
-			binary_array_integer.length == 0 && 
+			h.length == 0 && 
 			fractional !== undefined
 		) {
-			binary_array_integer.push("0");
-			var arr_string = binary_array_integer.join("");
+			h.push("0");
+			var arr_string = h.join("");
 			return arr_string.concat('', fractional);
 		}
 		else if (fractional === undefined) {
 			arr_string = 
-				binary_array_integer.reverse().join("");
+				h.reverse().join("");
 			return arr_string;
 		}
 		else {
 			var arr_string =
-				binary_array_integer.reverse().join("");
+				h.reverse().join("");
 			return arr_string.concat('', fractional);
 		}
 	}
@@ -224,3 +226,4 @@ for (var n = -2.5; n <= 2; n += 0.5) {
 
 	initial_inputs(decimal, binary_array_integer);
 }
+

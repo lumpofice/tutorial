@@ -9,19 +9,22 @@ for n = -2.25:0.25:2
 	# final_output function takes the array elements and strings them
 	# together with a join
 	function final_outputs(h, fractional)
-		if isempty(binary_array_integer) && fractional == nothing
+		if h == nothing
+			h = []
+		end
+		if isempty(h) && fractional == nothing
 			return 0
-		elseif isempty(binary_array_integer) && fractional !== nothing
-			append!(binary_array_integer, "0")
-			arr_string = join(string.(binary_array_integer))
+		elseif isempty(h) && fractional !== nothing
+			append!(h, "0")
+			arr_string = join(string.(h))
 			return arr_string*fractional
 		elseif fractional == nothing
 			arr_string = 
-				join(string.(reverse(binary_array_integer)))
+				join(string.(reverse(h)))
 			return arr_string
 		else
 			arr_string = 
-				join(string.(reverse(binary_array_integer)))
+				join(string.(reverse(h)))
 			return arr_string*fractional
 		end
 	end
@@ -102,7 +105,7 @@ for n = -2.25:0.25:2
 	function signature(integer_part, binary_array_integer)
 		if integer_part >= 0
 			return nonnegative(integer_part, binary_array_integer)
-		else integer_part < 0
+		else
 			return rearranging_the_negative(
 				 negative(abs(integer_part)-1, 
 				      binary_array_integer)
