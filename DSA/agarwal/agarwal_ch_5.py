@@ -668,3 +668,37 @@ test_strings = (
 for s in test_strings:
     m = check_brackets011124(s)
     print("s: {}; verdict: {}".format(s, m))
+
+print("")
+print("")
+print("")
+
+# Second attempt at Agarwal's list-based queue
+class ListQueue011724:
+    def __init__(self):
+        self.queue_data = []
+        self.front = self.rear = 0
+        self.size = 3
+    def enqueue011724(self, data):
+        if self.rear == self.size:
+            print("Queue full; pop off an element.")
+        else:
+            self.queue_data.append(data)
+            self.rear += 1
+    def dequeue011724(self):
+        if self.rear == self.front:
+            print("Nothing in the queue.")
+        else:
+            self.queue_data.pop(0)
+            self.rear -= 1
+list_based_queue = ListQueue011724()
+list_based_queue.enqueue011724("one")
+list_based_queue.enqueue011724("two")
+list_based_queue.enqueue011724("three")
+list_based_queue.enqueue011724("four")
+print("this is the rear: {}".format(list_based_queue.rear))
+list_based_queue.dequeue011724()
+list_based_queue.dequeue011724()
+list_based_queue.dequeue011724()
+list_based_queue.dequeue011724()
+print("this is the rear: {}".format(list_based_queue.rear))
