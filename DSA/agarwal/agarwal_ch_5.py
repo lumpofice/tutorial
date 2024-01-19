@@ -702,3 +702,66 @@ list_based_queue.dequeue011724()
 list_based_queue.dequeue011724()
 list_based_queue.dequeue011724()
 print("this is the rear: {}".format(list_based_queue.rear))
+
+
+print("")
+print("")
+print("")
+
+# Second attempt at Agarwal's LinkedList-based queue
+class NodeQueue011824:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+class LinkedListQueue011824:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.prev = None
+    def enqueue011824(self, data):
+        node = NodeQueue011824(data)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = node
+    def dequeue011824(self):
+        if self.head is None:
+            print("Queue is empty")
+        elif self.head.next is None:
+            self.head = None
+        else:
+            self.head = self.head.next
+            self.head.prev = None
+    def iterate011824(self):
+        current = self.head
+        if current is None:
+            print("Nothing through which to iterate. The queue is empty.")
+        while current:
+            print(current.data)
+            current = current.next
+queue011824 = LinkedListQueue011824()
+queue011824.dequeue011824()
+queue011824.enqueue011824("one")
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.iterate011824()
+queue011824.enqueue011824("two")
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.enqueue011824(1)
+queue011824.enqueue011824(2)
+queue011824.enqueue011824(3)
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.iterate011824()
+queue011824.dequeue011824()
+queue011824.iterate011824()
+queue011824.dequeue011824()
