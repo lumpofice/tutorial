@@ -471,7 +471,11 @@ print("Let's delete an item and look at the list.")
 number2.delete()
 number2.iter()
 
-
+print("")
+print("")
+print("")
+print("We implement another attempt at the array-based stack")
+print("----------------------------------------------------")
 # 2nd attempt Agarwal array-based stack
 
 overflow = 3
@@ -505,8 +509,6 @@ def traverse():
         print("position: {}".format(i))
         print(stack[i])
 
-print("")
-print("")
 print("")
 print("-_-_-_-_-_-_-_-_-_-_-_-_-_*_*_*_*_*_*_*_*")
 print("Let us push items to the stack until we experience overflow.")
@@ -672,6 +674,8 @@ for s in test_strings:
 print("")
 print("")
 print("")
+print("We implement another attempt at the list-based queue")
+print("----------------------------------------------------")
 
 # Second attempt at Agarwal's list-based queue
 class ListQueue011724:
@@ -707,6 +711,8 @@ print("this is the rear: {}".format(list_based_queue.rear))
 print("")
 print("")
 print("")
+print("We implement another attempt at the linked-list-based queue")
+print("----------------------------------------------------")
 
 # Second attempt at Agarwal's LinkedList-based queue
 class NodeQueue011824:
@@ -765,3 +771,39 @@ queue011824.iterate011824()
 queue011824.dequeue011824()
 queue011824.iterate011824()
 queue011824.dequeue011824()
+
+print("")
+print("")
+print("")
+print("We implement another attempt at the stack-based queue")
+print("----------------------------------------------------")
+
+# Second attempt at Agarwal's Stack-based queue
+class StackQueue012124:
+    def __init__(self):
+        self.list_1_items = []
+        self.list_2_items = []
+    def enqueue012124(self, data):
+        self.list_1_items.append(data)
+    def dequeue012124(self):
+        if not self.list_1_items:
+            print("queue is empty")
+        else:
+            while self.list_1_items:
+                self.list_2_items.append(self.list_1_items.pop())
+            first_in_queue = self.list_2_items.pop()
+            while self.list_2_items:
+                self.list_1_items.append(self.list_2_items.pop())
+            print("Here is the first in queue: {}".format(first_in_queue))
+the_list_queue012124 = StackQueue012124()
+the_list_queue012124.dequeue012124()
+the_list_queue012124.enqueue012124("one")
+the_list_queue012124.dequeue012124()
+the_list_queue012124.dequeue012124()
+the_list_queue012124.enqueue012124("one")
+the_list_queue012124.enqueue012124("two")
+the_list_queue012124.enqueue012124("three")
+the_list_queue012124.dequeue012124()
+the_list_queue012124.dequeue012124()
+the_list_queue012124.dequeue012124()
+the_list_queue012124.dequeue012124()
