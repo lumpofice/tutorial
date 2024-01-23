@@ -486,3 +486,46 @@ print("")
 print("let's traverse the tree with root node {} once more".format(n3.data))
 tree.inorder(n3)
 
+
+# Second attempt at the Agarwal in-order traverse of Binary Tree algorithm
+print("")
+print("")
+print("second attempt at in-order traverse of binary tree")
+print("--------------------------------")
+class BinaryTreeNode012324:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+n_0 = BinaryTreeNode012324("root")
+
+n_1 = BinaryTreeNode012324("left")
+n_0.left = n_1
+
+n_2 = BinaryTreeNode012324("right")
+n_0.right = n_2
+
+n_3 = BinaryTreeNode012324("left_0")
+n_1.left = n_3
+
+n_4 = BinaryTreeNode012324("left_1")
+n_1.right = n_4
+
+n_5 = BinaryTreeNode012324("right_1")
+n_2.right = n_5
+
+n_6 = BinaryTreeNode012324("left_0_0")
+n_3.left = n_6
+
+n_7 = BinaryTreeNode012324("left_0_1")
+n_3.right = n_7
+
+def in_order_traverse012324(root):
+    current = root
+    if current.left:
+        in_order_traverse012324(current.left)
+    print(current.data)
+    if current.right:
+        in_order_traverse012324(current.right)
+
+in_order_traverse012324(n_0)
