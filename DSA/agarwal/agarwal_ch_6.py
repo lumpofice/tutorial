@@ -529,3 +529,18 @@ def in_order_traverse012324(root):
         in_order_traverse012324(current.right)
 
 in_order_traverse012324(n_0)
+
+print("")
+print("")
+print("second attempt at Pre-Order")
+def pre_order_traverse012324(root):
+    if root:
+        print(root.data)
+    if root.left:
+        pre_order_traverse012324(root.left)
+    if root.right:
+        pre_order_traverse012324(root.right)
+    return
+
+
+pre_order_traverse012324(n_0)
