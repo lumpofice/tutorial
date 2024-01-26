@@ -542,5 +542,16 @@ def pre_order_traverse012324(root):
         pre_order_traverse012324(root.right)
     return
 
-
 pre_order_traverse012324(n_0)
+
+print("")
+print("")
+print("second attempt at Post-Order")
+def post_order_traverse012324(root):
+    if root is None:
+        return
+    post_order_traverse012324(root.left)
+    post_order_traverse012324(root.right)
+    print(root.data)
+
+post_order_traverse012324(n_0)
