@@ -555,3 +555,37 @@ def post_order_traverse012324(root):
     print(root.data)
 
 post_order_traverse012324(n_0)
+
+print("")
+print("")
+print("")
+print("Second attempt at the binary tree level traverse algorithm.")
+class ListBasedBinaryTreeQueue012324:
+    def __init__(self):
+        self.items1 = []
+        self.items2 = []
+    def enqueue012324(self, node):
+        self.items1.append(node)
+    def dequeue012324(self):
+        while self.items1:
+            self.items2.append(self.items1.pop())
+        if self.items2:
+            first = self.items2.pop()
+            while self.items2:
+                self.items1.append(self.items2.pop())
+            return first
+        return "queue is empty"
+
+queue012324 = ListBasedBinaryTreeQueue012324()
+def level_traverse012324(root):
+    global queue012324
+    queue012324.enqueue012324(root)
+    while queue012324.items1:
+        the_pop = queue012324.dequeue012324()
+        print(the_pop.data)
+        if the_pop.left:
+            queue012324.enqueue012324(the_pop.left)
+        if the_pop.right:
+                queue012324.enqueue012324(the_pop.right)
+
+level_traverse012324(n_0)
