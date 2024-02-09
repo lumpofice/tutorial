@@ -589,3 +589,48 @@ def level_traverse012324(root):
                 queue012324.enqueue012324(the_pop.right)
 
 level_traverse012324(n_0)
+
+
+# Second attempt at Expression Trees 02_09_24
+print("")
+print("")
+print("")
+print("")
+print("Expression Tree 02_09_24")
+print("------------------------------------")
+class TreeNode020924:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+class ExpressionStack020924:
+    def __init__(self):
+        self.items = []
+    def append020924(self, node):
+        self.items.append(node)
+    def pop020924(self):
+        return self.items.pop()
+expression020924 = "3 4 + 8 5 - *".split()
+stack020924 = ExpressionStack020924()
+for item in expression020924:
+    if item in "+-*/":
+        node = TreeNode020924(item)
+        node.left = stack020924.pop020924()
+        node.right = stack020924.pop020924()
+        stack020924.append020924(node)
+    else:
+        stack020924.append020924(TreeNode020924(int(item)))
+def calc020924(root):
+    if root.data == "+":
+        return calc020924(root.left) + calc020924(root.right)
+    elif root.data == "-":
+        return calc020924(root.left) - calc020924(root.right)
+    elif root.data == "*":
+        return calc020924(root.left)*calc020924(root.right)
+    elif root.data == "/":
+        return calc020924(root.left)/calc020924(root.right)
+    else:
+        return root.data
+root020924 = stack020924.pop020924()
+result020924 = calc020924(root020924)
+print("Mathematical Result: {}".format(result020924))
