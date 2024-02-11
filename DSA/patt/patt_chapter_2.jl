@@ -1,5 +1,5 @@
 # Converting decimal to binary
-for n = -2.25:0.25:2
+for n = -1.75:0.25:5
 	decimal = n
 	binary_array_integer = []
 	binary_array_fraction = []
@@ -178,7 +178,8 @@ end
 
 
 
-for n = -2.25:0.25:2
+println("-Shift decimal to position after first appearance of nonnegative 1-")
+for n = -1.75:0.25:5
 	decimal = n
 	binary_array_integer = []
 	binary_array_fraction = []
@@ -347,11 +348,23 @@ for n = -2.25:0.25:2
 				)
 		end
 	end
-
+	
 	binary_input = initial_inputs(decimal, binary_array_integer)
 	if binary_input isa String
 		if findfirst(".", binary_input) !== nothing
 			k = findfirst(".", binary_input)
+			if binary_input[1] == 0
+				ones_position = findfirst("1", binary_input)
+			else
+				function find_ones_decimal(binary_input)
+					for j in 2:length(binary_input)
+						if binary_input[j] == '1'
+							return j
+						end
+					end
+				end
+				ones_position = find_ones_decimal(binary_input)
+			end
 			binary_input_shift = []
 			for i in 1:length(binary_input)
 				if i == k[1] && k[1] == 2
@@ -363,14 +376,14 @@ for n = -2.25:0.25:2
 					end
 					insert!(
 						binary_input_shift,
-						3,
+						ones_position,
 						binary_input[i]
 						)	
 					break
 				elseif i == k[1]
 					insert!(
 						binary_input_shift,
-						3,
+						ones_position + 1,
 						binary_input[i]
 						)
 				else
@@ -380,8 +393,28 @@ for n = -2.25:0.25:2
 						) 
 				end
 			end
-			println("")
+			println(join(string.(binary_input_shift)))
+		else
+			if binary_input[1] == 0
+				ones_position = findfirst("1", binary_input)
+			else
+				function find_ones_whole(binary_input)
+					for j in 2:length(binary_input)
+						if binary_input[j] == '1'
+							return j
+						end
+					end
+				end
+				ones_position = find_ones_whole(binary_input)
+			end
+			binary_input_shift = []
+			for i in 1:length(binary_input)
+				append!(binary_input_shift, binary_input[i])
+			end
+			insert!(binary_input_shift, ones_position + 1, ".")
 			println(join(string.(binary_input_shift)))
 		end
+	else
+		println(binary_input)
 	end
 end
