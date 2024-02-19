@@ -360,162 +360,342 @@ for n = -8:0.25:8
 	# Coverting binary to 32-bit floating point
 	# ---------------------------------------------------------------------
 
-	binary_input = initial_inputs(decimal, binary_array_integer)
-	if binary_input isa String
-		# The following if case handles binary inputs with decimals,
-		# which means these binary inputs could have absolute values
-		# less than zero, which means that if the exponent has length 
-		# less than 8 bits, we will need to insert '0' at the front of 
-		# the exponent until the exponent has a length of 8 bits.
-		if findfirst(".", binary_input) !== nothing
-			k = findfirst(".", binary_input)
-			if binary_input[1] == 0
+	if decimal < 0
+		first_position = 1
+		binary_input = initial_inputs(
+			abs(decimal), binary_array_integer
+			)
+		if binary_input isa String
+			# The following if case handles binary inputs with 
+			# decimals, which means these binary inputs could 
+			# have absolute values less than zero, which means 
+			# that if the exponent has length less than 8 bits, 
+			# we will need to insert '0' at the front of 
+			# the exponent until the exponent has a length 
+			# of 8 bits.
+			if findfirst(".", binary_input) !== nothing
+				k = findfirst(".", binary_input)
 				ones_position = findfirst("1", binary_input)
-			else
-				function find_ones_decimal(binary_input)
-					for j in 2:length(binary_input)
-						if binary_input[j] == '1'
-							return j
-						end
-					end
+				# ---------------------------------------------
+				# EXPONENT
+				# ---------------------------------------------
+				# Building the exponent
+				k_minus_ones_position = k[1] - ones_position[1]
+				decimal_exponent = 127 + k_minus_ones_position
+				floating_point_exponent = 
+					initial_inputs(decimal_exponent, [])
+				floating_point_exponent_zero_removed = 
+					deleteat!(collect(
+						floating_point_exponent), 1)
+				while length(
+					floating_point_exponent_zero_removed
+					) < 8
+					insert!(
+					floating_point_exponent_zero_removed,
+					1,'0')
 				end
-				ones_position = find_ones_decimal(binary_input)
-			end
-			# -----------------------------------------------------
-			# EXPONENT
-			# -----------------------------------------------------
-			# Building the exponent
-			k_minus_ones_position = k[1] - ones_position[1]
-			decimal_exponent = 127 + k_minus_ones_position
-			floating_point_exponent = 
-				initial_inputs(decimal_exponent, [])
-			floating_point_exponent_zero_removed = 
-				deleteat!(collect(floating_point_exponent), 1)
-			while length(floating_point_exponent_zero_removed) < 8
-				insert!(floating_point_exponent_zero_removed,
-					 1,'0')
-			end
-			println("decimal: ", decimal)
-			println("floating exponent: ",
-				join(
-				string.(
-				floating_point_exponent_zero_removed
-				))
-				)
-			# Shifting the decimal point to the n+1 position,
-			# where position n contains the first nonnegative 1
-			binary_input_shift = []
-			for i in 1:length(binary_input)
-				if i == k[1] && k[1] == 2
-					for j in 3:length(binary_input)
-						append!(
+				println("decimal: ", decimal)
+				println("floating exponent: ",
+					join(
+					string.(
+					floating_point_exponent_zero_removed
+					))
+					)
+				# Shifting the decimal point to the n+1 
+				# position, where position n contains 
+				# the first nonnegative 1
+				binary_input_shift = []
+				for i in 1:length(binary_input)
+					if i == k[1] && k[1] == 2
+						for j in 3:length(binary_input)
+							append!(
 							binary_input_shift,
 							binary_input[j]
 							)
+						end
+						insert!(
+							binary_input_shift,
+							ones_position[1],
+							binary_input[i]
+							)	
+						break
+					elseif i == k[1]
+						insert!(
+							binary_input_shift,
+							ones_position[1] + 1,
+							binary_input[i]
+							)
+					else
+						append!(
+							binary_input_shift,
+							binary_input[i]
+							) 
 					end
-					insert!(
-						binary_input_shift,
-						ones_position,
-						binary_input[i]
-						)	
-					break
-				elseif i == k[1]
-					insert!(
-						binary_input_shift,
-						ones_position + 1,
-						binary_input[i]
-						)
-				else
-					append!(
-						binary_input_shift,
-						binary_input[i]
-						) 
 				end
-			end
-			println("binary: ", binary_input)
-			println("shifting the binary decimal: ", 
-				join(string.(binary_input_shift)))
-			# -----------------------------------------------------
-			# FRACTION
-			# -----------------------------------------------------
-			# Here, strip away the information up to and 
-			# including the decimal point, from the left.
-			if isassigned(binary_input_shift,ones_position+1)
-				if k[1] == 2
-					float_fraction = deleteat!(
-					  	binary_input_shift, 
-					  	1:ones_position
-					  	)
-				else
-					float_fraction = deleteat!(
-						  binary_input_shift,
-						  1:ones_position+1
-						  )
-				end
-			else
-				float_fraction = "00000000000000000000000"
-			end
-			println("float fraction: ", 
-				join(string.(float_fraction)))
-			println("")
-		else
-			k = length(binary_input) + 1
-			if binary_input[1] == 0
-				ones_position = findfirst("1", binary_input)
-			else
-				function find_ones_whole(binary_input)
-					for j in 2:length(binary_input)
-						if binary_input[j] == '1'
-							return j
+				println("binary: ", binary_input)
+				println("shifting the binary decimal: ", 
+					join(string.(binary_input_shift)))
+				# ---------------------------------------------
+				# FRACTION
+				# ---------------------------------------------
+				# Here, strip away the information up to and 
+				# including the decimal point, from the left.
+				if isassigned(
+					binary_input_shift,ones_position[1]+1)
+					if k[1] == 2
+						float_fraction = deleteat!(
+						  	binary_input_shift, 
+						  	1:ones_position[1]
+						  	)
+						while length(
+							float_fraction) < 23
+							append!(float_fraction,
+								 '0')
+						end
+					else
+						float_fraction = deleteat!(
+							  binary_input_shift,
+							  1:ones_position[1]+1
+							  )
+						while length(
+							float_fraction) < 23
+							append!(float_fraction,
+								 '0')
 						end
 					end
+				else
+					float_fraction = 
+						"00000000000000000000000"
 				end
-				ones_position = find_ones_whole(binary_input)
-			end
-			# -----------------------------------------------------
-			# EXPONENT
-			# -----------------------------------------------------
-			# Building the exponent
-			k_minus_ones_position = k[1] - ones_position[1]
-			decimal_exponent = 127 + k_minus_ones_position
-			floating_point_exponent = 
-				initial_inputs(decimal_exponent, [])
-			floating_point_exponent_zero_removed = 
-				deleteat!(collect(floating_point_exponent), 1)
-			println("decimal: ", decimal)
-			println("floating exponent: ",
-				join(
-				string.(
-				floating_point_exponent_zero_removed
-				))
-				)
-			binary_input_shift = []
-			for i in 1:length(binary_input)
-				append!(binary_input_shift, binary_input[i])
-			end
-			insert!(binary_input_shift, ones_position + 1, ".")
-			println("binary: ", binary_input)
-			println("shifting the binary decimal: ",
-				join(string.(binary_input_shift)))
-			# -----------------------------------------------------
-			# FRACTION
-			# -----------------------------------------------------
-			# Here, strip away the information up to and 
-			# including the decimal point, from the left.
-			if isassigned(binary_input_shift,ones_position+2)
-				float_fraction = deleteat!(
-					binary_input_shift,
-					1:ones_position+1
-					)
+				println("float fraction: ", 
+					join(string.(float_fraction)))
+				println("")
 			else
-				float_fraction = "00000000000000000000000"
+				k = length(binary_input) + 1
+				ones_position = findfirst(
+						"1", binary_input)
+				# ---------------------------------------------
+				# EXPONENT
+				# ---------------------------------------------
+				# Building the exponent
+				k_minus_ones_position = k[1] - ones_position[1]
+				decimal_exponent = 127 + k_minus_ones_position
+				floating_point_exponent = 
+					initial_inputs(decimal_exponent, [])
+				floating_point_exponent_zero_removed = 
+					deleteat!(collect(
+						floating_point_exponent), 1)
+				println("decimal: ", decimal)
+				println("floating exponent: ",
+					join(
+					string.(
+					floating_point_exponent_zero_removed
+					))
+					)
+				binary_input_shift = []
+				for i in 1:length(binary_input)
+					append!(binary_input_shift, 
+						 binary_input[i])
+				end
+				insert!(binary_input_shift, 
+					 ones_position[1] + 1, ".")
+				println("binary: ", binary_input)
+				println("shifting the binary decimal: ",
+					join(string.(binary_input_shift)))
+				# ---------------------------------------------
+				# FRACTION
+				# ---------------------------------------------
+				# Here, strip away the information up to and 
+				# including the decimal point, from the left.
+				if isassigned(binary_input_shift,
+					       ones_position[1]+2)
+					float_fraction = deleteat!(
+						binary_input_shift,
+						1:ones_position[1]+1
+						)
+					while length(
+						float_fraction) < 23
+						append!(float_fraction,
+							 '0')
+					end
+				else
+					float_fraction = 
+						"00000000000000000000000"
+				end
+				println("float fraction: ",
+					join(string.(float_fraction)))
+				println("")
 			end
-			println("float fraction: ",
-				join(string.(float_fraction)))
-			println("")
+		else
+			println(binary_input)
 		end
 	else
-		println(binary_input)
+		first_position = 0
+		binary_input = initial_inputs(decimal, binary_array_integer)
+		if binary_input isa String
+			# The following if case handles binary inputs with 
+			# decimals, which means these binary inputs could 
+			# have absolute values less than zero, which means 
+			# that if the exponent has length less than 8 bits, 
+			# we will need to insert '0' at the front of 
+			# the exponent until the exponent has a length 
+			# of 8 bits.
+			if findfirst(".", binary_input) !== nothing
+				k = findfirst(".", binary_input)
+				ones_position = findfirst("1", binary_input)
+				# ---------------------------------------------
+				# EXPONENT
+				# ---------------------------------------------
+				# Building the exponent
+				k_minus_ones_position = k[1] - ones_position[1]
+				decimal_exponent = 127 + k_minus_ones_position
+				floating_point_exponent = 
+					initial_inputs(decimal_exponent, [])
+				floating_point_exponent_zero_removed = 
+					deleteat!(collect(
+						floating_point_exponent), 1)
+				while length(
+					floating_point_exponent_zero_removed
+					) < 8
+					insert!(
+					floating_point_exponent_zero_removed,
+					1,'0')
+				end
+				println("decimal: ", decimal)
+				println("floating exponent: ",
+					join(
+					string.(
+					floating_point_exponent_zero_removed
+					))
+					)
+				# Shifting the decimal point to the n+1 
+				# position, where position n contains 
+				# the first nonnegative 1
+				binary_input_shift = []
+				for i in 1:length(binary_input)
+					if i == k[1] && k[1] == 2
+						for j in 3:length(binary_input)
+							append!(
+							binary_input_shift,
+							binary_input[j]
+							)
+						end
+						insert!(
+							binary_input_shift,
+							ones_position[1],
+							binary_input[i]
+							)	
+						break
+					elseif i == k[1]
+						insert!(
+							binary_input_shift,
+							ones_position[1] + 1,
+							binary_input[i]
+							)
+					else
+						append!(
+							binary_input_shift,
+							binary_input[i]
+							) 
+					end
+				end
+				println("binary: ", binary_input)
+				println("shifting the binary decimal: ", 
+					join(string.(binary_input_shift)))
+				# ---------------------------------------------
+				# FRACTION
+				# ---------------------------------------------
+				# Here, strip away the information up to and 
+				# including the decimal point, from the left.
+				if isassigned(
+					binary_input_shift,ones_position[1]+1)
+					if k[1] == 2
+						float_fraction = deleteat!(
+						  	binary_input_shift, 
+						  	1:ones_position[1]
+						  	)
+						while length(
+							float_fraction) < 23
+							append!(float_fraction,
+								 '0')
+						end
+					else
+						float_fraction = deleteat!(
+							  binary_input_shift,
+							  1:ones_position[1]+1
+							  )
+						while length(
+							float_fraction) < 23
+							append!(float_fraction,
+								 '0')
+						end
+					end
+				else
+					float_fraction = 
+						"00000000000000000000000"
+				end
+				println("float fraction: ", 
+					join(string.(float_fraction)))
+				println("")
+			else
+				k = length(binary_input) + 1
+				ones_position = findfirst(
+						"1", binary_input)
+				# ---------------------------------------------
+				# EXPONENT
+				# ---------------------------------------------
+				# Building the exponent
+				k_minus_ones_position = k[1] - ones_position[1]
+				decimal_exponent = 127 + k_minus_ones_position
+				floating_point_exponent = 
+					initial_inputs(decimal_exponent, [])
+				floating_point_exponent_zero_removed = 
+					deleteat!(collect(
+						floating_point_exponent), 1)
+				println("decimal: ", decimal)
+				println("floating exponent: ",
+					join(
+					string.(
+					floating_point_exponent_zero_removed
+					))
+					)
+				binary_input_shift = []
+				for i in 1:length(binary_input)
+					append!(binary_input_shift, 
+						 binary_input[i])
+				end
+				insert!(binary_input_shift, 
+					 ones_position[1] + 1, ".")
+				println("binary: ", binary_input)
+				println("shifting the binary decimal: ",
+					join(string.(binary_input_shift)))
+				# ---------------------------------------------
+				# FRACTION
+				# ---------------------------------------------
+				# Here, strip away the information up to and 
+				# including the decimal point, from the left.
+				if isassigned(binary_input_shift,
+					       ones_position[1]+2)
+					float_fraction = deleteat!(
+						binary_input_shift,
+						1:ones_position[1]+1
+						)
+					while length(
+						float_fraction) < 23
+						append!(float_fraction,
+							 '0')
+					end
+				else
+					float_fraction = 
+						"00000000000000000000000"
+				end
+				println("float fraction: ",
+					join(string.(float_fraction)))
+				println("")
+			end
+		else
+			println(binary_input)
+		end
 	end
 end
 
