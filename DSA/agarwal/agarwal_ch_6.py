@@ -683,3 +683,73 @@ tree.insert(7)
 tree.insert(1)
 tree.insert(8)
 tree.in_order(tree.root)
+
+# Second attempt at Binary Search Trees search method 02_18_24
+print("")
+print("")
+print("")
+print("")
+print("Binary Search Tree search method 02_18_24")
+print("------------------------------------")
+class Node021824:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+class Tree021824:
+    def __init__(self):
+        self.root = None
+    def insert(self, data):
+        node = Node021824(data)
+        if self.root is None:
+            self.root = node
+        else:
+            if node.data < self.root.data:
+                current = self.root
+                while node.data < current.data:
+                    if current.left is None:
+                        current.left = node
+                    else:
+                        current = current.left
+            else:
+                current = self.root
+                while node.data > current.data:
+                    if current.right is None:
+                        current.right = node
+                    else:
+                        current = current.right
+    def search(self, data):
+        current = self.root
+        while True:
+            if current is None:
+                print("Data not present in this tree")
+                return
+            elif current.data == data:
+                print("Found it! {}".format(data))
+                return
+            elif current.data > data:
+                current = current.left
+            else:
+                current = current.right
+    def in_order(self, root):
+        if root.left:
+            self.in_order(root.left)
+        print(root.data)
+        if root.right:
+            self.in_order(root.right)
+        return
+tree = Tree021824()
+tree.insert(15)
+tree.insert(13)
+tree.insert(12)
+tree.insert(17)
+tree.insert(11)
+tree.insert(18)
+tree.insert(10)
+tree.insert(9)
+tree.insert(7)
+tree.insert(2)
+tree.insert(1)
+tree.in_order(tree.root)
+tree.search(7)
+tree.search(0)
