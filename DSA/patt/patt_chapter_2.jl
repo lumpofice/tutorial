@@ -361,7 +361,7 @@ for n = -8:0.25:8
 	# ---------------------------------------------------------------------
 
 	if decimal < 0
-		first_position = 1
+		first_position = "1"
 		binary_input = initial_inputs(
 			abs(decimal), binary_array_integer
 			)
@@ -469,7 +469,6 @@ for n = -8:0.25:8
 				end
 				println("float fraction: ", 
 					join(string.(float_fraction)))
-				println("")
 			else
 				k = length(binary_input) + 1
 				ones_position = findfirst(
@@ -524,13 +523,12 @@ for n = -8:0.25:8
 				end
 				println("float fraction: ",
 					join(string.(float_fraction)))
-				println("")
 			end
 		else
 			println(binary_input)
 		end
 	else
-		first_position = 0
+		first_position = "0"
 		binary_input = initial_inputs(decimal, binary_array_integer)
 		if binary_input isa String
 			# The following if case handles binary inputs with 
@@ -636,7 +634,6 @@ for n = -8:0.25:8
 				end
 				println("float fraction: ", 
 					join(string.(float_fraction)))
-				println("")
 			else
 				k = length(binary_input) + 1
 				ones_position = findfirst(
@@ -691,11 +688,16 @@ for n = -8:0.25:8
 				end
 				println("float fraction: ",
 					join(string.(float_fraction)))
-				println("")
 			end
 		else
-			println(binary_input)
+			first_poisition = "0"
+			floating_point_exponent_zero_removed = "00000000"
+			float_fraction = "00000000000000000000000"
 		end
 	end
+	println("32-bit float: ", first_position*" "*
+		join(string.(floating_point_exponent_zero_removed))*" "*
+		join(string.(float_fraction)))
+		println("")
 end
 
